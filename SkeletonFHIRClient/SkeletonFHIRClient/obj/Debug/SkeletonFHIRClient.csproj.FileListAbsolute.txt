@@ -1,1 +1,0 @@
-C:\Users\MirjamB\Documents\fhirstarters\SkeletonFHIRClient\SkeletonFHIRClient\bin\Debug\SkeletonFHIRClient.exe.config

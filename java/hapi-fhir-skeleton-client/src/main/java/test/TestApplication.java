@@ -24,6 +24,19 @@ public class TestApplication {
 		String string = ctx.newXmlParser().setPrettyPrint(true).encodeResourceToString(patient);
 		System.out.println(string);
 
+		/*
+		 * Some more things to try:
+		 * 
+		 * Read a resource from the server
+		 *   Bonus: Display an error if it has been deleted
+		 * 
+		 * Search for Patient resources with the name “Test” and print the results
+		 *   Bonus: Load the second page
+		 * 
+		 * Create a new Patient resource and upload it to the server
+		 *   Bonus: Log the ID that the server assigns to your resource
+		 */
+		
 	}
 
 }

@@ -19,4 +19,46 @@ The following example shows how to create a resource by POSTing it to a server. 
 
 First, set the method to `POST`, and the URL to `http://fhirtest.uhn.ca/baseDstu2` as shown in the screenshot below:
 
-<img src="./images/postman_url.png"/>
+<img src="./images/postman_url.png" style="border: 1px solid black;"/>
+
+Now, switch to the `Headers` tab, and add a header with a key/name of `Content-Type` and a value of `application/json+fhir`
+
+<img src="./images/header_json.png"/>
+
+Add the following content, which is a simple Patient resource:
+
+```json
+{
+  "resourceType": "Patient",
+  "identifier": [
+    {
+      "system": "urn:oid:1.2.36.146.595.217.0.1",
+      "value": "12345",
+    }
+  ],
+  "name": [
+    {
+      "family": [
+        "Chalmers"
+      ],
+      "given": [
+        "Peter",
+        "James"
+      ]
+    }
+  ],
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "(03) 5555 6473",
+      "use": "work"
+    }
+  ]
+}
+```
+
+<img src="./images/patient_json.png"/>
+
+
+
+

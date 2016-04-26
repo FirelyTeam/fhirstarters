@@ -13,7 +13,7 @@ This tutorial shows how to use Postman (a browser based REST tool) to take FHIR 
 
 # Create a Resource
 
-The following example shows how to create a resource by POSTing it to a server. If you prefer JSON or XML, you can skip one of the following two examples.
+The following example shows how to create a Patient resource by POSTing it to a server. Note that most of the examples below are shown using JSON. If you are more comfortable using XML that's fine! See the notes for what you need to do differently.
 
 ## Create a JSON Resource
 
@@ -21,7 +21,7 @@ First, set the method to `POST`, and the URL to `http://fhirtest.uhn.ca/baseDstu
 
 <img src="./images/postman_url.png" style="border: 1px solid black;"/>
 
-Now, switch to the `Headers` tab, and add a header with a key/name of `Content-Type` and a value of `application/json+fhir`
+Now, switch to the `Headers` tab, and add a header with a key/name of `Content-Type` and a value of `application/json+fhir` (or for XML, the value should be `application/xml+fhir` )
 
 <img src="./images/header_json.png"/>
 
@@ -57,6 +57,27 @@ Add the following content, which is a simple Patient resource. Look at the `"nam
 }
 ```
 
+If you prefer XML, the content could be:
+
+```xml
+<Patient xmlns="http://hl7.org/fhir">
+  <identifier>
+    <system value="urn:oid:1.2.36.146.595.217.0.1"/>
+    <value value="12345"/>
+  </identifier>
+  <name>
+    <family value="Chalmers"/>
+    <given value="Peter"/>
+    <given value="James"/>
+  </name>
+  <telecom>
+    <system value="phone"/>
+    <value value="(03) 5555 6473"/>
+    <use value="work"/>
+  </telecom>
+</Patient>
+```
+
 <img src="./images/patient_json.png"/>
 
 Click `Send` and then scroll to the bottom of the window.
@@ -70,6 +91,8 @@ Change to the `Headers` tab to see the response headers.
 On this tab you will see the `Location` response header, which specifies the URL you can use to retrieve this resource. Try pasting that URL into a browser:
 
 <img src="./images/read_json.png"/>
+
+You can try adding `?_format=xml` or `?_format=json` to the URL to specify that you want XML or JSON as response. The server will automatically convert.
 
 ## Update the Resource
 

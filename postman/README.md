@@ -6,4 +6,4 @@ This tutorial shows how to use Postman (a browser based REST tool) to take FHIR 
 
 Open Chrome, and browse to the following URL: [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en) 
 
-!(Postman Screenshot)[./images/install_postman.png]
+![Postman Screenshot](./images/install_postman.png)

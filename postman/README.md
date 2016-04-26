@@ -112,3 +112,18 @@ Click `Send` and scroll to the bottom to see the results. If the operation succe
 Try looking up the history of changes for your new resource by adding `/_history` to the end of the resource's logical ID and pasting that into a browser. Note that the response is a bundle which contains all versions.
 
 <img src="./images/history_json.png"/>
+
+# Search For your Resource
+
+Let's try searching for your resource now. We'll use the HAPI testing UI to build a query, but really we're just creating URLs you could use in Postman or a browser or anything else.
+
+* Point your browser at [http://fhirtest.uhn.ca/](http://fhirtest.uhn.ca/)
+* Click on `Patient` on the left hand navigation bar
+* Change the `Search Parameters` dropdown box to the `Name` parameter
+* Put the name that you gave your resource in
+
+<img src="./images/search_name.png"/>
+
+Click search and you will see the results of your search.
+
+<img src="./images/search_name_res.png"/>

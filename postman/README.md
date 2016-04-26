@@ -70,3 +70,13 @@ Change to the `Headers` tab to see the response headers.
 On this tab you will see the `Location` response header, which specifies the URL you can use to retrieve this resource. Try pasting that URL into a browser:
 
 <img src="./images/read_json.png"/>
+
+## Update the Resource
+
+Note the logical ID of the resource you have added (it's `24279` in the example above, but it will be a different number for the resource you have just created). Return to Postman, and scroll back to the top (request) part of the window. Make the following changes:
+
+* Change the HTTP method (top left part of the window) from `POST` to `PUT`
+* Add the logical ID to the URL
+* Add the ID to the resource body as shown below
+
+<img src="./images/update_json.png"/>

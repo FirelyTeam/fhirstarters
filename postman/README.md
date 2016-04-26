@@ -17,7 +17,7 @@ The following example shows how to create a resource by POSTing it to a server. 
 
 ## Create a JSON Resource
 
-First, set the method to `POST`, and the URL to `http://fhirtest.uhn.ca/baseDstu2` as shown in the screenshot below:
+First, set the method to `POST`, and the URL to `http://fhirtest.uhn.ca/baseDstu2/Patient` as shown in the screenshot below:
 
 <img src="./images/postman_url.png" style="border: 1px solid black;"/>
 
@@ -59,6 +59,8 @@ Add the following content, which is a simple Patient resource:
 
 <img src="./images/patient_json.png"/>
 
+Click `Send` and then scroll to the bottom of the window.
 
+<img src="./images/create_response_json.json"/>
 
 

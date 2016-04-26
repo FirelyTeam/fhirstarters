@@ -63,4 +63,10 @@ Click `Send` and then scroll to the bottom of the window.
 
 <img src="./images/create_response_json.json"/>
 
+Change to the `Headers` tab to see the response headers.
 
+<img src="./images/header_resp_json.png"/>
+
+On this tab you will see the `Location` response header, which specifies the URL you can use to retrieve this resource. Try pasting that URL into a browser:
+
+<img src="./images/read_json.png"/>

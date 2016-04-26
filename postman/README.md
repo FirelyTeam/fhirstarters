@@ -25,7 +25,7 @@ Now, switch to the `Headers` tab, and add a header with a key/name of `Content-T
 
 <img src="./images/header_json.png"/>
 
-Add the following content, which is a simple Patient resource:
+Add the following content, which is a simple Patient resource. Look at the `"name"` section below, and change this to your own name if you would like.
 
 ```json
 {
@@ -77,6 +77,15 @@ Note the logical ID of the resource you have added (it's `24279` in the example 
 
 * Change the HTTP method (top left part of the window) from `POST` to `PUT`
 * Add the logical ID to the URL
-* Add the ID to the resource body as shown below
+* Add the ID to the resource body in a new item right below the `"resourceType"` element, as shown in the example below
+* You can also make any other changes you want! Try adding `"gender"`, or `"birthDate"`, or any other fields on the [Patient resource definition](http://hl7.org/fhir/patient.html)
 
 <img src="./images/update_json.png"/>
+
+Click `Send` and scroll to the bottom to see the results. If the operation succeeded, you will note that the new version is `/_history/2`
+
+<img src="./images/update_resp_json.png"/>
+
+Try looking up the history of changes for your new resource by adding `/_history` to the end of the resource's logical ID and pasting that into a browser. Note that the response is a bundle which contains all versions.
+
+<img src="./images/history_json.png"/>

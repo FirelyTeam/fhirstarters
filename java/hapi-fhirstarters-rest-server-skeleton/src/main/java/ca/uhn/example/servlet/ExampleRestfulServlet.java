@@ -23,7 +23,7 @@ public class ExampleRestfulServlet extends RestfulServer {
 	 * Constructor
 	 */
 	public ExampleRestfulServlet() {
-		super(FhirContext.forDstu3()); // Support STU3
+		super(FhirContext.forDstu3()); // This is an STU3 server
 	}
 	
 	/**

@@ -6,16 +6,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import ca.uhn.fhir.model.api.ResourceMetadataKeyEnum;
-import ca.uhn.fhir.model.dstu2.composite.HumanNameDt;
-import ca.uhn.fhir.model.dstu2.resource.OperationOutcome;
-import ca.uhn.fhir.model.dstu2.resource.Patient;
-import ca.uhn.fhir.model.dstu2.valueset.AdministrativeGenderEnum;
-import ca.uhn.fhir.model.dstu2.valueset.IssueSeverityEnum;
+import org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender;
+import org.hl7.fhir.dstu3.model.HumanName;
+import org.hl7.fhir.dstu3.model.InstantType;
+import org.hl7.fhir.dstu3.model.OperationOutcome;
+import org.hl7.fhir.dstu3.model.OperationOutcome.IssueSeverity;
+import org.hl7.fhir.dstu3.model.Patient;
+import org.hl7.fhir.dstu3.model.StringType;
+
 import ca.uhn.fhir.model.primitive.IdDt;
-import ca.uhn.fhir.model.primitive.InstantDt;
 import ca.uhn.fhir.model.primitive.StringDt;
-import ca.uhn.fhir.model.primitive.UriDt;
 import ca.uhn.fhir.parser.DataFormatException;
 import ca.uhn.fhir.rest.annotation.Create;
 import ca.uhn.fhir.rest.annotation.IdParam;
@@ -55,11 +55,11 @@ public class PatientResourceProvider implements IResourceProvider {
 		Patient patient = new Patient();
 		patient.setId(Long.toString(resourceId));
 		patient.addIdentifier();
-		patient.getIdentifier().get(0).setSystem(new UriDt("urn:hapitest:mrns"));
+		patient.getIdentifier().get(0).setSystem("urn:hapitest:mrns");
 		patient.getIdentifier().get(0).setValue("00002");
 		patient.addName().addFamily("Test");
 		patient.getName().get(0).addGiven("PatientOne");
-		patient.setGender(AdministrativeGenderEnum.FEMALE);
+		patient.setGender(AdministrativeGender.FEMALE);
 
 		LinkedList<Patient> list = new LinkedList<Patient>();
 		list.add(patient);
@@ -78,21 +78,11 @@ public class PatientResourceProvider implements IResourceProvider {
 	 *            The ID of the patient to retrieve
 	 */
 	private void addNewVersion(Patient thePatient, Long theId) {
-		InstantDt publishedDate;
 		if (!myIdToPatientVersions.containsKey(theId)) {
 			myIdToPatientVersions.put(theId, new LinkedList<Patient>());
-			publishedDate = InstantDt.withCurrentTime();
-		} else {
-			Patient currentPatitne = myIdToPatientVersions.get(theId).getLast();
-			Map<ResourceMetadataKeyEnum<?>, Object> resourceMetadata = currentPatitne.getResourceMetadata();
-			publishedDate = (InstantDt) resourceMetadata.get(ResourceMetadataKeyEnum.PUBLISHED);
 		}
 
-		/*
-		 * PUBLISHED time will always be set to the time that the first version was stored. UPDATED time is set to the time that the new version was stored.
-		 */
-		thePatient.getResourceMetadata().put(ResourceMetadataKeyEnum.PUBLISHED, publishedDate);
-		thePatient.getResourceMetadata().put(ResourceMetadataKeyEnum.UPDATED, InstantDt.withCurrentTime());
+		thePatient.getMeta().setLastUpdatedElement(InstantType.withCurrentTime());
 
 		Deque<Patient> existingVersions = myIdToPatientVersions.get(theId);
 
@@ -141,8 +131,9 @@ public class PatientResourceProvider implements IResourceProvider {
 		 */
 		for (Deque<Patient> nextPatientList : myIdToPatientVersions.values()) {
 			Patient nextPatient = nextPatientList.getLast();
-			NAMELOOP: for (HumanNameDt nextName : nextPatient.getName()) {
-				for (StringDt nextFamily : nextName.getFamily()) {
+			NAMELOOP: 
+			for (HumanName nextName : nextPatient.getName()) {
+				for (StringType nextFamily : nextName.getFamily()) {
 					if (theFamilyName.equals(nextFamily)) {
 						retVal.add(nextPatient);
 						break NAMELOOP;
@@ -201,7 +192,7 @@ public class PatientResourceProvider implements IResourceProvider {
 			return retVal.getLast();
 		} else {
 			for (Patient nextVersion : retVal) {
-				String nextVersionId = nextVersion.getId().getVersionIdPart();
+				String nextVersionId = nextVersion.getIdElement().getVersionIdPart();
 				if (theId.getVersionIdPart().equals(nextVersionId)) {
 					return nextVersion;
 				}
@@ -255,9 +246,9 @@ public class PatientResourceProvider implements IResourceProvider {
 		/*
 		 * Our server will have a rule that patients must have a family name or we will reject them
 		 */
-		if (thePatient.getNameFirstRep().getFamilyFirstRep().isEmpty()) {
+		if (thePatient.getNameFirstRep().getFamily().isEmpty()) {
 			OperationOutcome outcome = new OperationOutcome();
-			outcome.addIssue().setSeverity(IssueSeverityEnum.FATAL).setDetails("No family name provided, Patient resources must have at least one family name.");
+			outcome.addIssue().setSeverity(IssueSeverity.FATAL).setDiagnostics("No family name provided, Patient resources must have at least one family name.");
 			throw new UnprocessableEntityException(outcome);
 		}
 	}

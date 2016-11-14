@@ -3,6 +3,10 @@ package ca.uhn.example.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hl7.fhir.dstu3.model.CodeType;
+import org.hl7.fhir.dstu3.model.ContactPoint;
+import org.hl7.fhir.dstu3.model.Organization;
+
 import ca.uhn.fhir.model.api.BaseIdentifiableElement;
 import ca.uhn.fhir.model.api.IElement;
 import ca.uhn.fhir.model.api.IExtension;
@@ -11,10 +15,7 @@ import ca.uhn.fhir.model.api.annotation.Child;
 import ca.uhn.fhir.model.api.annotation.Description;
 import ca.uhn.fhir.model.api.annotation.Extension;
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
-import ca.uhn.fhir.model.dstu2.composite.ContactPointDt;
-import ca.uhn.fhir.model.dstu2.resource.Organization;
 import ca.uhn.fhir.model.primitive.BooleanDt;
-import ca.uhn.fhir.model.primitive.CodeDt;
 import ca.uhn.fhir.util.ElementUtil;
 
 /**
@@ -34,7 +35,7 @@ public class MyOrganization extends Organization {
 	@Description(shortDefinition = "Contains a simple code indicating the billing code for this organization")
 	@Extension(url = "http://foo#billingCode", isModifier = false, definedLocally = true)
 	@Child(name = "billingCode")
-	private CodeDt myBillingCode;
+	private CodeType myBillingCode;
 
 	/**
 	 * This is a composite extension, containing further extensions instead of
@@ -61,14 +62,14 @@ public class MyOrganization extends Organization {
 		myEmergencyContact = theEmergencyContact;
 	}
 
-	public CodeDt getBillingCode() {
+	public CodeType getBillingCode() {
 		if (myBillingCode == null) {
-			myBillingCode = new CodeDt();
+			myBillingCode = new CodeType();
 		}
 		return myBillingCode;
 	}
 
-	public void setBillingCode(CodeDt theBillingCode) {
+	public void setBillingCode(CodeType theBillingCode) {
 		myBillingCode = theBillingCode;
 	}
 
@@ -79,11 +80,6 @@ public class MyOrganization extends Organization {
 	 * ElementUtil is called and all fields are passed in.
 	 * *****************************/
 	
-	@Override
-	public <T extends IElement> List<T> getAllPopulatedChildElementsOfType(Class<T> theType) {
-		return ElementUtil.allPopulatedChildElements(theType, super.getAllPopulatedChildElementsOfType(theType), myBillingCode, myEmergencyContact);
-	}
-
 	@Override
 	public boolean isEmpty() {
         return super.isEmpty() && ElementUtil.isEmpty(myBillingCode, myEmergencyContact);
@@ -114,7 +110,7 @@ public class MyOrganization extends Organization {
 		@Description(shortDefinition = "Contains the actual contact details")
 		@Extension(url = "http://foo#emergencyContactContact", isModifier = false, definedLocally = true)
 		@Child(name = "contact")
-		private ContactPointDt myContact;
+		private ContactPoint myContact;
 
 		/* *****************************
 		 * Getters and setters
@@ -131,14 +127,14 @@ public class MyOrganization extends Organization {
 			myActive = theActive;
 		}
 
-		public ContactPointDt getContact() {
+		public ContactPoint getContact() {
 			if (myContact == null) {
-				myContact = new ContactPointDt();
+				myContact = new ContactPoint();
 			}
 			return myContact;
 		}
 
-		public void setContact(ContactPointDt theContact) {
+		public void setContact(ContactPoint theContact) {
 			myContact = theContact;
 		}
 

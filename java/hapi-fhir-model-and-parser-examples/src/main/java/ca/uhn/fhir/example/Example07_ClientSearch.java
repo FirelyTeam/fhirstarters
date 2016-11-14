@@ -1,31 +1,39 @@
 package ca.uhn.fhir.example;
 
 import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.model.api.Bundle;
 import ca.uhn.fhir.model.dstu.resource.Patient;
-import ca.uhn.fhir.model.dstu.valueset.AdministrativeGenderCodesEnum;
-import ca.uhn.fhir.rest.api.MethodOutcome;
+import ca.uhn.fhir.model.primitive.IdDt;
 import ca.uhn.fhir.rest.client.IGenericClient;
+import ca.uhn.fhir.rest.client.interceptor.LoggingInterceptor;
 
+//@formatter:off
 public class Example07_ClientSearch {
 	public static void main(String[] theArgs) {
 
 		// Create a client
-		String serverBaseUrl = "http://fhirtest.uhn.ca/base";
 		FhirContext ctx = new FhirContext();
+		String serverBaseUrl = "http://fhirtest.uhn.ca/base";
 		IGenericClient client = ctx.newRestfulGenericClient(serverBaseUrl);
 
-		// Use the client to read back the new instance using the
-		// ID we retrieved from the read
-		Patient patient = client.read(Patient.class, "4529");
-	
-		// Print the ID of the newly created resource
-		System.out.println("Found ID:    " + patient.getId());
+		// Log requests and responses
+		client.registerInterceptor(new LoggingInterceptor(true));
 		
-		// Change the gender and send an update to the server
-		patient.setGender(AdministrativeGenderCodesEnum.F);
-		MethodOutcome outcome = client.update().resource(patient).execute();
+		// Build a search and execute it
+		Bundle response = client.search()
+			.forResource(Patient.class)
+			.where(Patient.NAME.matches().value("Test"))
+			.and(Patient.BIRTHDATE.before().day("2014-01-01"))
+			.limitTo(100)
+			.execute();
 		
-		System.out.println("Now have ID: " + outcome.getId());
+		// How many resources did we find?
+		System.out.println("Responses: " + response.size());
+		
+		// Print the ID of the first one
+		IdDt firstResponseId = response.getEntries().get(0).getResource().getId();
+		System.out.println(firstResponseId);
 		
 	}
 }
+//@formatter:on

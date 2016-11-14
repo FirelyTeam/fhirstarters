@@ -1,24 +1,25 @@
 package ca.uhn.fhir.example;
 
+import org.hl7.fhir.dstu3.model.Patient;
+import org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender;
+
 import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.model.dstu.resource.Patient;
-import ca.uhn.fhir.model.dstu.valueset.AdministrativeGenderCodesEnum;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.IGenericClient;
 
-public class Example05_ClientCreate {
+public class Example06_ClientCreate {
 	public static void main(String[] theArgs) {
 
 		Patient pat = new Patient();
 		pat.addName().addFamily("Simpson").addGiven("Homer").addGiven("J");
 		pat.addIdentifier().setSystem("http://acme.org/MRNs").setValue("7000135");
-		pat.setGender(AdministrativeGenderCodesEnum.M);
+		pat.setGender(AdministrativeGender.MALE);
 		
 		// Create a context
-		FhirContext ctx = new FhirContext();
+		FhirContext ctx = FhirContext.forDstu3();
 		
 		// Create a client
-		String serverBaseUrl = "http://fhirtest.uhn.ca/base";
+		String serverBaseUrl = "http://fhirtest.uhn.ca/baseDstu3";
 		IGenericClient client = ctx.newRestfulGenericClient(serverBaseUrl);
 
 		// Use the client to store a new resource instance 
@@ -26,6 +27,5 @@ public class Example05_ClientCreate {
 	
 		// Print the ID of the newly created resource
 		System.out.println(outcome.getId());
-		
 	}
 }

@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>furore.github.io</groupId>
-	<artifactId>hapi-fhir-client-skeleton</artifactId>
+	<artifactId>hapi-fhirstarters-client-skeleton</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 

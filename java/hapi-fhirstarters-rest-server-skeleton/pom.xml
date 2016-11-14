@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>test</groupId>
-	<artifactId>hapi-fhir-rest-server-skeleton</artifactId>
+	<artifactId>hapi-fhirstarters-rest-server-skeleton</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
 

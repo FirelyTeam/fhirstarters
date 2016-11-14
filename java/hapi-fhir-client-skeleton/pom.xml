@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>furore.github.io</groupId>
-	<artifactId>hapi-fhir-skeleton-client</artifactId>
+	<artifactId>hapi-fhir-client-skeleton</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 
@@ -18,24 +18,29 @@
 		</repository>
 	</repositories>
 
+	<properties>
+		<hapifhir_version>2.1</hapifhir_version>
+	</properties>
+
 	<dependencies>
 
 		<!-- This dependency includes the core HAPI-FHIR classes -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-base</artifactId>
-			<version>1.5</version>
+			<version>${hapifhir_version}</version>
 		</dependency>
+
 		<!-- At least one "structures" JAR must also be included -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-structures-dstu2</artifactId>
-			<version>1.5</version>
+			<version>${hapifhir_version}</version>
 		</dependency>
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-structures-dstu3</artifactId>
-			<version>1.6-SNAPSHOT</version>
+			<version>${hapifhir_version}</version>
 		</dependency>
 
 		<!-- 
@@ -47,7 +52,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.1.2</version>
+			<version>1.1.7</version>
 		</dependency>
 
 	</dependencies>

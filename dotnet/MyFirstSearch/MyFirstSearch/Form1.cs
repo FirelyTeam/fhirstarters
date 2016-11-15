@@ -24,16 +24,17 @@ namespace MyFirstSearch
             // Choose your preferred FHIR server or add your own
             // More at http://wiki.hl7.org/index.php?title=Publicly_Available_FHIR_Servers_for_testing
 
-            var client = new FhirClient("http://fhir2.healthintersections.com.au/open");
-            //var client = new FhirClient("http://spark.furore.com/fhir");
-            //var client = new FhirClient("http://fhirtest.uhn.ca/");
-            //var client = new FhirClient("https://fhir-open-api-dstu2.smartplatforms.org");
-            //var client = new FhirClient("http://fhirplace.health-samurai.io/");
+            //var client = new FhirClient("http://fhir2.healthintersections.com.au/open");
+            var client = new FhirClient("http://spark.furore.com/fhir");
+            //var client = new FhirClient("http://fhirtest.uhn.ca/baseDstu2");
+            //var client = new FhirClient("https://fhir-open-api-dstu2.smarthealthit.org/");
 
             try
             {
-                var results = client.Search<Patient>(new string[] { "name=pete" });
-                //var results = client.Search<Patient>(new string[] { "name=pete", "birthdate=1974-12-25" });
+                var q = new SearchParams().Where("name=pete");
+                //var q = new SearchParams().Where("name=pete").Where("birthdate=1974-12-25");
+
+                var results = client.Search<Patient>(q);
 
                 txtDisplay.Text = "";
 

@@ -21,7 +21,7 @@ public class Example04_EncodeResource {
 		// Create a context
 		FhirContext ctx = FhirContext.forDstu3();
 		
-		// Create a XML parser
+		// Create a JSON parser
 		IParser parser = ctx.newJsonParser();
 		parser.setPrettyPrint(true);
 		

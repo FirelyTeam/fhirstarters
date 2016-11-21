@@ -35,7 +35,7 @@
 
 	<servlet>
 		<servlet-name>fhirServlet</servlet-name>
-		<servlet-class>ca.uhn.fhir.jpa.demo.JpaServerDemo</servlet-class>
+		<servlet-class>ca.uhn.fhir.jpa.demo.JpaServerDemoServlet</servlet-class>
 		<init-param>
 			<param-name>ImplementationDescription</param-name>
 			<param-value>FHIR JPA Server</param-value>

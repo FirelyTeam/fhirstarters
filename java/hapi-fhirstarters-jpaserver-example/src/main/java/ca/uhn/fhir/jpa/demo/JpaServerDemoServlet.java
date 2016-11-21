@@ -31,7 +31,7 @@ import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.RestfulServer;
 import ca.uhn.fhir.rest.server.interceptor.IServerInterceptor;
 
-public class JpaServerDemo extends RestfulServer {
+public class JpaServerDemoServlet extends RestfulServer {
 
 	private static final long serialVersionUID = 1L;
 

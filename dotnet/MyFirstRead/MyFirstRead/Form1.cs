@@ -24,10 +24,9 @@ namespace MyFirstRead
             // Choose your preferred FHIR server or add your own
             // More at http://wiki.hl7.org/index.php?title=Publicly_Available_FHIR_Servers_for_testing
 
-            //var client = new FhirClient("http://fhir2.healthintersections.com.au/open");
-            var client = new FhirClient("http://spark.furore.com/fhir");
-            //var client = new FhirClient("http://fhirtest.uhn.ca/baseDstu2");
-            //var client = new FhirClient("https://fhir-open-api-dstu2.smarthealthit.org/");
+            //var client = new FhirClient("http://test.fhir.org/r3/open");
+            var client = new FhirClient("http://vonk.furore.com");
+            //var client = new FhirClient("http://fhirtest.uhn.ca/baseDstu3");
 
             try
             {

@@ -10,7 +10,7 @@
 	<parent>
 		<groupId>ca.uhn.hapi.fhir</groupId>
 		<artifactId>hapi-fhir</artifactId>
-		<version>2.1</version>
+		<version>2.5</version>
 	</parent>
 
 	<artifactId>hapi-fhirstarters-jpaserver-example</artifactId>
@@ -34,78 +34,73 @@
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-base</artifactId>
-			<version>2.1</version>
+			<version>2.5</version>
 		</dependency>
 
 		<!-- At least one "structures" JAR must also be included -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-structures-dstu</artifactId>
-			<version>2.1</version>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-structures-dstu2</artifactId>
-			<version>2.1</version>
+			<artifactId>hapi-fhir-structures-dstu3</artifactId>
+			<version>2.5</version>
 		</dependency>
 
 		<!-- This dependency includes the JPA server itself, which is packaged separately from the rest of HAPI FHIR -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-jpaserver-base</artifactId>
-			<version>2.1</version>
-		</dependency>
+			<version>2.5</version>
+   </dependency>
 
-		<!-- This dependency is used for the "FHIR Tester" web app overlay -->
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-testpage-overlay</artifactId>
-			<version>2.1</version>
-			<type>war</type>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-testpage-overlay</artifactId>
-			<version>2.1</version>
-			<classifier>classes</classifier>
-			<scope>provided</scope>
-		</dependency>
+   <!-- This dependency is used for the "FHIR Tester" web app overlay -->
+   <dependency>
+      <groupId>ca.uhn.hapi.fhir</groupId>
+      <artifactId>hapi-fhir-testpage-overlay</artifactId>
+      <version>2.5</version>
+      <type>war</type>
+      <scope>provided</scope>
+   </dependency>
+   <dependency>
+      <groupId>ca.uhn.hapi.fhir</groupId>
+      <artifactId>hapi-fhir-testpage-overlay</artifactId>
+      <version>2.5</version>
+      <classifier>classes</classifier>
+      <scope>provided</scope>
+   </dependency>
 
-		<!-- HAPI-FHIR uses Logback for logging support. The logback library is included automatically by Maven as a part of the hapi-fhir-base dependency, but you also need to include a logging library. Logback 
-			is used here, but log4j would also be fine. -->
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-		</dependency>
+   <!-- HAPI-FHIR uses Logback for logging support. The logback library is included automatically by Maven as a part of the hapi-fhir-base dependency, but you also need to include a logging library. Logback
+         is used here, but log4j would also be fine. -->
+   <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+   </dependency>
 
-		<!-- Needed for JEE/Servlet support -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
+   <!-- Needed for JEE/Servlet support -->
+   <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
+   </dependency>
 
-		<!-- If you are using HAPI narrative generation, you will need to include Thymeleaf as well. Otherwise the following can be omitted. -->
-		<dependency>
-			<groupId>org.thymeleaf</groupId>
-			<artifactId>thymeleaf</artifactId>
-		</dependency>
+   <!-- If you are using HAPI narrative generation, you will need to include Thymeleaf as well. Otherwise the following can be omitted. -->
+   <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf</artifactId>
+   </dependency>
 
-		<!-- Used for CORS support -->
-		<dependency>
-			<groupId>org.ebaysf.web</groupId>
-			<artifactId>cors-filter</artifactId>
-			<exclusions>
-				<exclusion>
-					<artifactId>servlet-api</artifactId>
-					<groupId>javax.servlet</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+   <!-- Used for CORS support -->
+   <dependency>
+      <groupId>org.ebaysf.web</groupId>
+      <artifactId>cors-filter</artifactId>
+      <exclusions>
+         <exclusion>
+            <artifactId>servlet-api</artifactId>
+            <groupId>javax.servlet</groupId>
+         </exclusion>
+      </exclusions>
+   </dependency>
 
-		<!-- Spring Web is used to deploy the server to a web container. -->
-		<dependency>
+      <!-- Spring Web is used to deploy the server to a web container. -->
+      <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 		</dependency>

@@ -10,7 +10,7 @@ public class Example99_Extensions {
 
 	public static void main(String[] args) {
 		Patient pat = new Patient();
-		pat.addName().addFamily("Simpson").addGiven("Homer");
+		pat.addName().setFamily("Simpson").addGiven("Homer");
 		
 		String url = "http://acme.org#eyeColour";
 		pat.addExtension().setUrl(url).setValue(new CodeType("blue"));

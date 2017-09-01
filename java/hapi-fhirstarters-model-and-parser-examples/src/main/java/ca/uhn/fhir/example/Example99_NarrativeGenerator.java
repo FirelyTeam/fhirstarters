@@ -11,7 +11,7 @@ public class Example99_NarrativeGenerator {
 		
 		// Create an encounter with an invalid status and no class
 		Patient pat = new Patient();
-		pat.addName().addFamily("Simpson").addGiven("Homer").addGiven("Jay");
+		pat.addName().setFamily("Simpson").addGiven("Homer").addGiven("Jay");
 		pat.addAddress().addLine("342 Evergreen Terrace").addLine("Springfield");
 		pat.addIdentifier().setSystem("http://acme.org/mrns").setValue("12345");
 		

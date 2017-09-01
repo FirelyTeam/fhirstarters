@@ -210,3 +210,15 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+# Java IDE Files
+*.project
+*.classpath
+*.iml
+
+# IntelliJ Files
+.idea
+
+# Maven
+target/
+

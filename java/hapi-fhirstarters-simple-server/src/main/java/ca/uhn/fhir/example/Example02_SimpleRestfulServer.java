@@ -8,7 +8,7 @@ import ca.uhn.fhir.rest.server.RestfulServer;
 import ca.uhn.fhir.rest.server.interceptor.ResponseHighlighterInterceptor;
 
 @WebServlet("/*")
-public class Example03_SimpleRestfulServer extends RestfulServer {
+public class Example02_SimpleRestfulServer extends RestfulServer {
 
 	@Override
 	protected void initialize() throws ServletException {
@@ -16,7 +16,7 @@ public class Example03_SimpleRestfulServer extends RestfulServer {
 		setFhirContext(FhirContext.forDstu3());
 		
 		// Register resource providers
-		registerProvider(new Example04_PatientResourceProviderWithCreate());
+		registerProvider(new Example01_PatientResourceProvider());
 		
 		// Format the responses in nice HTML
 		registerInterceptor(new ResponseHighlighterInterceptor());

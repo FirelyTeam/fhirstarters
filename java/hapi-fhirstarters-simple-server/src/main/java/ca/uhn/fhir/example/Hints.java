@@ -21,16 +21,16 @@ import ca.uhn.fhir.rest.param.StringParam;
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
 
-public class Example04_PatientResourceProviderWithCreate implements IResourceProvider {
+public class Hints implements IResourceProvider {
 	private Map<String, Patient> myPatients = new HashMap<String, Patient>();
 	private int myNextId = 2;
 
 	/** Constructor */
-	public Example04_PatientResourceProviderWithCreate() {
+	public Hints() {
 		Patient pat1 = new Patient();
 		pat1.setId("1");
 		pat1.addIdentifier().setSystem("http://acme.com/MRNs").setValue("7000135");
-		pat1.addName().addFamily("Simpson").addGiven("Homer").addGiven("J");
+		pat1.addName().setFamily("Simpson").addGiven("Homer").addGiven("J");
 		myPatients.put("1", pat1);
 	}
 
@@ -75,7 +75,7 @@ public class Example04_PatientResourceProviderWithCreate implements IResourcePro
 
 		// Loop through the patients looking for matches
 		for (Patient next : myPatients.values()) {
-			String familyName = next.getNameFirstRep().getFamilyAsSingleString().toLowerCase();
+			String familyName = next.getNameFirstRep().getFamily().toLowerCase();
 			if (familyName.contains(theParam.getValue().toLowerCase()) == false) {
 				continue;
 			}

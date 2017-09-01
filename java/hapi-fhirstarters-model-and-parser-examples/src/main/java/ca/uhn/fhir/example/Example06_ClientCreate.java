@@ -11,7 +11,7 @@ public class Example06_ClientCreate {
 	public static void main(String[] theArgs) {
 
 		Patient pat = new Patient();
-		pat.addName().addFamily("Simpson").addGiven("Homer").addGiven("J");
+		pat.addName().setFamily("Simpson").addGiven("Homer").addGiven("J");
 		pat.addIdentifier().setSystem("http://acme.org/MRNs").setValue("7000135");
 		pat.setGender(AdministrativeGender.MALE);
 		
@@ -23,7 +23,10 @@ public class Example06_ClientCreate {
 		IGenericClient client = ctx.newRestfulGenericClient(serverBaseUrl);
 
 		// Use the client to store a new resource instance 
-		MethodOutcome outcome = client.create().resource(pat).execute();
+		MethodOutcome outcome = client
+         .create()
+         .resource(pat)
+         .execute();
 	
 		// Print the ID of the newly created resource
 		System.out.println(outcome.getId());

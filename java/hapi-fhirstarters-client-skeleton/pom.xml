@@ -18,29 +18,20 @@
 		</repository>
 	</repositories>
 
-	<properties>
-		<hapifhir_version>2.1</hapifhir_version>
-	</properties>
-
 	<dependencies>
 
 		<!-- This dependency includes the core HAPI-FHIR classes -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-base</artifactId>
-			<version>${hapifhir_version}</version>
+			<version>2.5</version>
 		</dependency>
 
 		<!-- At least one "structures" JAR must also be included -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-structures-dstu2</artifactId>
-			<version>${hapifhir_version}</version>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-structures-dstu3</artifactId>
-			<version>${hapifhir_version}</version>
+			<version>2.5</version>
 		</dependency>
 
 		<!-- 

@@ -12,7 +12,7 @@ public class Example05_ParseResource {
 	public static void main(String[] theArgs) {
 		
 		String resourceBody = "{\"resourceType\":\"Patient\",\"identifier\":[{\"system\":\"http://acme.org/MRNs\",\"value\":\"7000135\"}],\"name\":[{\"family\":[\"Simpson\"],\"given\":[\"Homer\",\"J\"]}]}";
-		
+
 		// Create a context
 		FhirContext ctx = FhirContext.forDstu3();
 		

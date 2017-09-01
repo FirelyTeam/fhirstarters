@@ -1,14 +1,14 @@
 package test;
 
-import org.hl7.fhir.instance.model.api.IIdType;
-
 import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.model.dstu2.resource.Patient;
-import ca.uhn.fhir.model.dstu2.valueset.AdministrativeGenderEnum;
 import ca.uhn.fhir.model.primitive.DateDt;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.IGenericClient;
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
+import org.hl7.fhir.dstu3.model.DateType;
+import org.hl7.fhir.dstu3.model.Enumerations;
+import org.hl7.fhir.dstu3.model.Patient;
+import org.hl7.fhir.instance.model.api.IIdType;
 
 public class TestApplicationHints {
 
@@ -40,18 +40,18 @@ public class TestApplicationHints {
 		FhirContext ctx = FhirContext.forDstu2();
 		IGenericClient client = ctx.newRestfulGenericClient("http://fhirtest.uhn.ca/baseDstu2");
 		
-		ca.uhn.fhir.model.dstu2.resource.Bundle results = client
+		org.hl7.fhir.dstu3.model.Bundle results = client
 			.search()
 			.forResource(Patient.class)
 			.where(Patient.NAME.matches().value("test"))
-			.returnBundle(ca.uhn.fhir.model.dstu2.resource.Bundle.class)
+			.returnBundle(org.hl7.fhir.dstu3.model.Bundle.class)
 			.execute();
 		
 		System.out.println("First page: ");
 		System.out.println(ctx.newXmlParser().encodeResourceToString(results));
 		
 		// Load the next page
-		ca.uhn.fhir.model.dstu2.resource.Bundle nextPage = client
+		org.hl7.fhir.dstu3.model.Bundle nextPage = client
 			.loadPage()
 			.next(results)
 			.execute();
@@ -69,15 +69,15 @@ public class TestApplicationHints {
 		// Populate the patient with fake information
 		newPatient
 			.addName()
-				.addFamily("DevDays2015")
+				.setFamily("DevDays2015")
 				.addGiven("John")
 				.addGiven("Q");
 		newPatient
 			.addIdentifier()
 				.setSystem("http://acme.org/mrn")
 				.setValue("1234567");
-		newPatient.setGender(AdministrativeGenderEnum.MALE);
-		newPatient.setBirthDate(new DateDt("2015-11-18"));
+		newPatient.setGender(Enumerations.AdministrativeGender.MALE);
+		newPatient.setBirthDateElement(new DateType("2015-11-18"));
 		
 		// Create a client
 		FhirContext ctx = FhirContext.forDstu2();

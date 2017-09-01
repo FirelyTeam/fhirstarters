@@ -17,14 +17,24 @@ public class Example07_ClientReadAndUpdate {
 
 		// Use the client to read back the new instance using the
 		// ID we retrieved from the read
-		Patient patient = client.read(Patient.class, "190002");
-	
-		// Print the ID of the newly created resource
+      Patient patient = client
+         .read()
+         .resource(Patient.class)
+         .withId("example")
+         .execute();
+
+      // Print the ID of the newly created resource
 		System.out.println("Found ID:    " + patient.getId());
 		
-		// Change the gender and send an update to the server
-		patient.setGender(AdministrativeGender.FEMALE);
-		MethodOutcome outcome = client.update().resource(patient).execute();
+		// Change the gender
+		patient.setGender(patient.getGender() == AdministrativeGender.MALE ?
+         AdministrativeGender.FEMALE : AdministrativeGender.MALE);
+
+		// Update the patient
+		MethodOutcome outcome = client
+         .update()
+         .resource(patient)
+         .execute();
 		
 		System.out.println("Now have ID: " + outcome.getId());
 	}

@@ -8,10 +8,10 @@ import org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender;
 import org.hl7.fhir.dstu3.model.Patient;
 import org.hl7.fhir.dstu3.model.TimeType;
 
-public class Example03_AddSomeExtensions {
+public class Example99_AddSomeExtensions {
 	public static void main(String[] theArgs) {
 		Patient pat = new Patient();
-		pat.addName().addFamily("Simpson").addGiven("Homer").addGiven("J");
+		pat.addName().setFamily("Simpson").addGiven("Homer").addGiven("J");
 
 		// Add an extension on the resource
 		pat.addExtension()

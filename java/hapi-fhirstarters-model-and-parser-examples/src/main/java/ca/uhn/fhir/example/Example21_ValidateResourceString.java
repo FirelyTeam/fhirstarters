@@ -9,7 +9,7 @@ import ca.uhn.fhir.parser.IParser;
 import ca.uhn.fhir.validation.FhirValidator;
 import ca.uhn.fhir.validation.ValidationResult;
 
-public class Example10_ValidateResourceString {
+public class Example21_ValidateResourceString {
 	public static void main(String[] args) {
 		
 		String input = "<Encounter xmlns=\"http://hl7.org/fhir\"></Encounter>";

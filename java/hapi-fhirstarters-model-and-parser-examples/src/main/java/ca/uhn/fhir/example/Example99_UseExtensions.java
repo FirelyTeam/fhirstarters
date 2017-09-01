@@ -3,14 +3,15 @@ package ca.uhn.fhir.example;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.model.primitive.CodeDt;
 import ca.uhn.fhir.parser.IParser;
+import org.hl7.fhir.dstu3.model.CodeType;
 
 public class Example99_UseExtensions {
 
 	public static void main(String[] args) {
 
-		Example99_ExtendedPatient pat = new Example99_ExtendedPatient();
+		Example32_ExtendedPatient pat = new Example32_ExtendedPatient();
 		pat.addName().setFamily("Simpson").addGiven("Homer");
-		pat.setEyeColour(new CodeDt("blue"));
+		pat.setEyeColour(new CodeType("blue"));
 		
 		IParser p = new FhirContext().newXmlParser().setPrettyPrint(true);
 		String encoded = p.encodeResourceToString(pat);

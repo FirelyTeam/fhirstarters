@@ -6,15 +6,14 @@ import org.hl7.fhir.dstu3.model.Patient;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 
-public class Example99_Extensions {
+public class Example33_UseExtendedPatient {
 
 	public static void main(String[] args) {
-		Patient pat = new Patient();
+      Example32_ExtendedPatient pat = new Example32_ExtendedPatient();
 		pat.addName().setFamily("Simpson").addGiven("Homer");
-		
-		String url = "http://acme.org#eyeColour";
-		pat.addExtension().setUrl(url).setValue(new CodeType("blue"));
-		
+
+		pat.setEyeColour(new CodeType("blue"));
+
 		IParser p = FhirContext.forDstu3().newXmlParser().setPrettyPrint(true);
 		String encoded = p.encodeResourceToString(pat);
 		

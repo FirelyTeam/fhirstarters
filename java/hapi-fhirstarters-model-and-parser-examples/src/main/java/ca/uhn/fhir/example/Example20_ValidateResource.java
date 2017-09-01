@@ -8,7 +8,7 @@ import ca.uhn.fhir.parser.IParser;
 import ca.uhn.fhir.validation.FhirValidator;
 import ca.uhn.fhir.validation.ValidationResult;
 
-public class Example09_ValidateResource {
+public class Example20_ValidateResource {
 	public static void main(String[] args) {
 		
 		// Create an incomplete encounter (status is required)
@@ -27,8 +27,5 @@ public class Example09_ValidateResource {
 		OperationOutcome outcome = (OperationOutcome) result.toOperationOutcome();
 		IParser parser = ctx.newXmlParser().setPrettyPrint(true);
 		System.out.println(parser.encodeResourceToString(outcome));
-	
-		
 	}
-	
 }

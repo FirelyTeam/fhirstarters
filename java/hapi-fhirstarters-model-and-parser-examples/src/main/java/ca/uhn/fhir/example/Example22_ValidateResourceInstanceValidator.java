@@ -8,7 +8,7 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import ca.uhn.fhir.validation.FhirValidator;
 
-public class Example11_ValidateResourceInstanceValidator {
+public class Example22_ValidateResourceInstanceValidator {
 	public static void main(String[] args) {
 		// Create an incomplete encounter (status is required)
 		Encounter enc = new Encounter();
@@ -17,7 +17,7 @@ public class Example11_ValidateResourceInstanceValidator {
 		// Create a new validator
 		FhirValidator validator = FhirContext.forDstu3().newValidator();
 		
-		// Cache this! Supplies structure definitions
+		// Cache this object! Supplies structure definitions
 		DefaultProfileValidationSupport support = new DefaultProfileValidationSupport();
 		
 		// Create the validator

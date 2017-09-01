@@ -1,14 +1,12 @@
 package ca.uhn.fhir.example;
 
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
 import org.hl7.fhir.dstu3.model.CodeableConcept;
-import org.hl7.fhir.dstu3.model.ContactPoint;
-import org.hl7.fhir.dstu3.model.ContactPoint.ContactPointSystem;
-import org.hl7.fhir.dstu3.model.ContactPoint.ContactPointUse;
-import org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender;
 import org.hl7.fhir.dstu3.model.Patient;
 import org.hl7.fhir.dstu3.model.TimeType;
 
-public class Example99_AddSomeExtensions {
+public class Example30_AddSomeExtensions {
 	public static void main(String[] theArgs) {
 		Patient pat = new Patient();
 		pat.addName().setFamily("Simpson").addGiven("Homer").addGiven("J");
@@ -23,5 +21,8 @@ public class Example99_AddSomeExtensions {
 		pat.getBirthDateElement().addExtension()
 				.setUrl("http://hl7.org/fhir/StructureDefinition/patient-birthTime")
 				.setValue(new TimeType("23:30"));
-	}
+
+      IParser parser = FhirContext.forDstu3().newJsonParser().setPrettyPrint(true);
+      System.out.println(parser.encodeResourceToString(pat));
+   }
 }

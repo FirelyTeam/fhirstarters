@@ -2,8 +2,7 @@ package ca.uhn.fhir.example;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.MethodOutcome;
-import ca.uhn.fhir.rest.client.IGenericClient;
-import ca.uhn.fhir.rest.client.interceptor.BasicAuthInterceptor;
+import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.rest.client.interceptor.CookieInterceptor;
 import ca.uhn.fhir.rest.client.interceptor.LoggingInterceptor;
 import org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender;

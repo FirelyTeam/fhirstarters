@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>furore.github.io</groupId>
@@ -14,21 +14,28 @@
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-base</artifactId>
-			<version>2.5</version>
+			<version>3.0.0</version>
 		</dependency>
+
+      <!-- This dependency includes the HAPI FHIR Server Framework -->
+      <dependency>
+         <groupId>ca.uhn.hapi.fhir</groupId>
+         <artifactId>hapi-fhir-server</artifactId>
+         <version>3.0.0</version>
+      </dependency>
 
 		<!-- At least one "structures" JAR must also be included -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-structures-dstu3</artifactId>
-			<version>2.5</version>
+			<version>3.0.0</version>
 		</dependency>
 
 		<!-- Used for validation  -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-validation-resources-dstu3</artifactId>
-			<version>2.5</version>
+			<version>3.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.phloc</groupId>
@@ -83,8 +90,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>

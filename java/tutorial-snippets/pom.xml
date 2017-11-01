@@ -1,53 +1,72 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
 
-	<groupId>furore.github.io</groupId>
-	<artifactId>tutorial-snippets</artifactId>
-	<version>1.0</version>
-	<packaging>war</packaging>
+   <groupId>furore.github.io</groupId>
+   <artifactId>tutorial-snippets</artifactId>
+   <version>1.0</version>
+   <packaging>jar</packaging>
 
-	<name>HAPI FHIR Model and Parser Samples</name>
+   <name>HAPI FHIR Tutorial Snippets Project</name>
 
-	<dependencies>
+   <dependencies>
 
-		<!-- This dependency includes the core HAPI-FHIR classes -->
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-base</artifactId>
-			<version>2.5</version>
-		</dependency>
+      <!-- This dependency includes the core HAPI-FHIR classes -->
+      <dependency>
+         <groupId>ca.uhn.hapi.fhir</groupId>
+         <artifactId>hapi-fhir-base</artifactId>
+         <version>3.0.0</version>
+      </dependency>
 
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-structures-dstu3</artifactId>
-			<version>2.5</version>
-		</dependency>
-		<dependency>
-			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-validation-resources-dstu3</artifactId>
-			<version>2.5</version>
-		</dependency>
-		<dependency>
-			<groupId>com.phloc</groupId>
-			<artifactId>phloc-schematron</artifactId>
-			<version>2.7.0</version>
-		</dependency>
+      <!-- This dependency includes the HAPI FHIR Server Framework -->
+      <dependency>
+         <groupId>ca.uhn.hapi.fhir</groupId>
+         <artifactId>hapi-fhir-server</artifactId>
+         <version>3.0.0</version>
+      </dependency>
 
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.1.7</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
-			<scope>provided</scope>
-		</dependency>
-		
-	</dependencies>
+      <dependency>
+         <groupId>ca.uhn.hapi.fhir</groupId>
+         <artifactId>hapi-fhir-structures-dstu3</artifactId>
+         <version>3.0.0</version>
+      </dependency>
+      <dependency>
+         <groupId>ca.uhn.hapi.fhir</groupId>
+         <artifactId>hapi-fhir-validation-resources-dstu3</artifactId>
+         <version>3.0.0</version>
+      </dependency>
+      <dependency>
+         <groupId>com.phloc</groupId>
+         <artifactId>phloc-schematron</artifactId>
+         <version>2.7.0</version>
+      </dependency>
 
-	<build>
-	</build>
+      <dependency>
+         <groupId>ch.qos.logback</groupId>
+         <artifactId>logback-classic</artifactId>
+         <version>1.1.7</version>
+      </dependency>
+      <dependency>
+         <groupId>javax.servlet</groupId>
+         <artifactId>javax.servlet-api</artifactId>
+         <version>3.0.1</version>
+         <scope>provided</scope>
+      </dependency>
+
+   </dependencies>
+
+   <build>
+      <plugins>
+         <!-- Tell Maven which Java source version you want to use -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+               <source>1.8</source>
+               <target>1.8</target>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
 
 </project>

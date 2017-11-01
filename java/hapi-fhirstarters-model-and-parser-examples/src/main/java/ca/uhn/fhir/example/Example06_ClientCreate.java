@@ -1,34 +1,33 @@
 package ca.uhn.fhir.example;
 
-import org.hl7.fhir.dstu3.model.Patient;
-import org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender;
-
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.MethodOutcome;
-import ca.uhn.fhir.rest.client.IGenericClient;
+import ca.uhn.fhir.rest.client.api.IGenericClient;
+import org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender;
+import org.hl7.fhir.dstu3.model.Patient;
 
 public class Example06_ClientCreate {
-	public static void main(String[] theArgs) {
+   public static void main(String[] theArgs) {
 
-		Patient pat = new Patient();
-		pat.addName().setFamily("Simpson").addGiven("Homer").addGiven("J");
-		pat.addIdentifier().setSystem("http://acme.org/MRNs").setValue("7000135");
-		pat.setGender(AdministrativeGender.MALE);
-		
-		// Create a context
-		FhirContext ctx = FhirContext.forDstu3();
-		
-		// Create a client
-		String serverBaseUrl = "http://fhirtest.uhn.ca/baseDstu3";
-		IGenericClient client = ctx.newRestfulGenericClient(serverBaseUrl);
+      Patient pat = new Patient();
+      pat.addName().setFamily("Simpson").addGiven("Homer").addGiven("J");
+      pat.addIdentifier().setSystem("http://acme.org/MRNs").setValue("7000135");
+      pat.setGender(AdministrativeGender.MALE);
 
-		// Use the client to store a new resource instance 
-		MethodOutcome outcome = client
+      // Create a context
+      FhirContext ctx = FhirContext.forDstu3();
+
+      // Create a client
+      String serverBaseUrl = "http://fhirtest.uhn.ca/baseDstu3";
+      IGenericClient client = ctx.newRestfulGenericClient(serverBaseUrl);
+
+      // Use the client to store a new resource instance
+      MethodOutcome outcome = client
          .create()
          .resource(pat)
          .execute();
-	
-		// Print the ID of the newly created resource
-		System.out.println(outcome.getId());
-	}
+
+      // Print the ID of the newly created resource
+      System.out.println(outcome.getId());
+   }
 }

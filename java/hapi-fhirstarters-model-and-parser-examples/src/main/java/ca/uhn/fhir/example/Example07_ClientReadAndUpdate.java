@@ -1,11 +1,11 @@
 package ca.uhn.fhir.example;
 
+import ca.uhn.fhir.rest.client.api.IGenericClient;
 import org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender;
 import org.hl7.fhir.dstu3.model.Patient;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.MethodOutcome;
-import ca.uhn.fhir.rest.client.IGenericClient;
 
 public class Example07_ClientReadAndUpdate {
 	public static void main(String[] theArgs) {

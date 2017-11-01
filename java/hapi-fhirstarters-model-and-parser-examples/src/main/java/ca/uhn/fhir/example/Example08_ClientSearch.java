@@ -1,11 +1,10 @@
 package ca.uhn.fhir.example;
 
+import ca.uhn.fhir.rest.client.api.IGenericClient;
 import org.hl7.fhir.dstu3.model.Bundle;
 import org.hl7.fhir.dstu3.model.Patient;
 
 import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.rest.client.IGenericClient;
-import ca.uhn.fhir.rest.client.interceptor.LoggingInterceptor;
 
 public class Example08_ClientSearch {
    public static void main(String[] theArgs) {

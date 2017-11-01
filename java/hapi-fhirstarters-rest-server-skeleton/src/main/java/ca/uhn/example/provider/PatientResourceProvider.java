@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import ca.uhn.fhir.context.FhirContext;
 import org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender;
 import org.hl7.fhir.dstu3.model.HumanName;
 import org.hl7.fhir.dstu3.model.InstantType;
@@ -249,7 +250,7 @@ public class PatientResourceProvider implements IResourceProvider {
 		if (thePatient.getNameFirstRep().getFamily().isEmpty()) {
 			OperationOutcome outcome = new OperationOutcome();
 			outcome.addIssue().setSeverity(IssueSeverity.FATAL).setDiagnostics("No family name provided, Patient resources must have at least one family name.");
-			throw new UnprocessableEntityException(outcome);
+			throw new UnprocessableEntityException(FhirContext.forDstu3(), outcome);
 		}
 	}
 

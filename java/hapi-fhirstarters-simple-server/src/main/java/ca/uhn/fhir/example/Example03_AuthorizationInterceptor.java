@@ -1,6 +1,6 @@
 package ca.uhn.fhir.example;
 
-import ca.uhn.fhir.rest.method.RequestDetails;
+import ca.uhn.fhir.rest.api.server.RequestDetails;
 import ca.uhn.fhir.rest.server.interceptor.auth.AuthorizationInterceptor;
 import ca.uhn.fhir.rest.server.interceptor.auth.IAuthRule;
 import ca.uhn.fhir.rest.server.interceptor.auth.RuleBuilder;

@@ -1,5 +1,6 @@
 package ca.uhn.fhir.example;
 
+import ca.uhn.fhir.model.api.TemporalPrecisionEnum;
 import org.hl7.fhir.dstu3.model.*;
 
 import java.util.Date;

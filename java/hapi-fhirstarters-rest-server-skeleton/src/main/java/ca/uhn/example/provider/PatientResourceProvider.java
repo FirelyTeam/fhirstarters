@@ -7,16 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import ca.uhn.fhir.context.FhirContext;
+import org.hl7.fhir.dstu3.model.*;
 import org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender;
-import org.hl7.fhir.dstu3.model.HumanName;
-import org.hl7.fhir.dstu3.model.InstantType;
-import org.hl7.fhir.dstu3.model.OperationOutcome;
 import org.hl7.fhir.dstu3.model.OperationOutcome.IssueSeverity;
-import org.hl7.fhir.dstu3.model.Patient;
-import org.hl7.fhir.dstu3.model.StringType;
 
-import ca.uhn.fhir.model.primitive.IdDt;
-import ca.uhn.fhir.model.primitive.StringDt;
 import ca.uhn.fhir.parser.DataFormatException;
 import ca.uhn.fhir.rest.annotation.Create;
 import ca.uhn.fhir.rest.annotation.IdParam;
@@ -91,7 +85,7 @@ public class PatientResourceProvider implements IResourceProvider {
 		String newVersion = Integer.toString(existingVersions.size());
 		
 		// Create an ID with the new version and assign it back to the resource
-		IdDt newId = new IdDt("Patient", Long.toString(theId), newVersion);
+		IdType newId = new IdType("Patient", Long.toString(theId), newVersion);
 		thePatient.setId(newId);
 		
 		existingVersions.add(thePatient);
@@ -111,7 +105,7 @@ public class PatientResourceProvider implements IResourceProvider {
 		addNewVersion(thePatient, id);
 
 		// Let the caller know the ID of the newly created resource
-		return new MethodOutcome(new IdDt(id));
+		return new MethodOutcome(new IdType(id));
 	}
 
 	/**
@@ -124,7 +118,7 @@ public class PatientResourceProvider implements IResourceProvider {
 	 * @return This method returns a list of Patients. This list may contain multiple matching resources, or it may also be empty.
 	 */
 	@Search()
-	public List<Patient> findPatientsByName(@RequiredParam(name = Patient.SP_FAMILY) StringDt theFamilyName) {
+	public List<Patient> findPatientsByName(@RequiredParam(name = Patient.SP_FAMILY) StringType theFamilyName) {
 		LinkedList<Patient> retVal = new LinkedList<Patient>();
 
 		/*
@@ -178,7 +172,7 @@ public class PatientResourceProvider implements IResourceProvider {
 	 * @return Returns a resource matching this identifier, or null if none exists.
 	 */
 	@Read(version = true)
-	public Patient readPatient(@IdParam IdDt theId) {
+	public Patient readPatient(@IdParam IdType theId) {
 		Deque<Patient> retVal;
 		try {
 			retVal = myIdToPatientVersions.get(theId.getIdPartAsLong());
@@ -215,7 +209,7 @@ public class PatientResourceProvider implements IResourceProvider {
 	 * @return This method returns a "MethodOutcome"
 	 */
 	@Update()
-	public MethodOutcome updatePatient(@IdParam IdDt theId, @ResourceParam Patient thePatient) {
+	public MethodOutcome updatePatient(@IdParam IdType theId, @ResourceParam Patient thePatient) {
 		validateResource(thePatient);
 
 		Long id;

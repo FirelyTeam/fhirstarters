@@ -1,16 +1,18 @@
 package ca.uhn.example.provider;
 
+import ca.uhn.fhir.model.primitive.BooleanDt;
+import ca.uhn.fhir.model.primitive.IdDt;
+import org.hl7.fhir.dstu3.model.BooleanType;
 import org.hl7.fhir.dstu3.model.CodeType;
 import org.hl7.fhir.dstu3.model.ContactPoint;
 import org.hl7.fhir.dstu3.model.ContactPoint.ContactPointUse;
 
 import ca.uhn.example.model.MyOrganization;
-import ca.uhn.fhir.model.primitive.BooleanDt;
-import ca.uhn.fhir.model.primitive.IdDt;
 import ca.uhn.fhir.rest.annotation.IdParam;
 import ca.uhn.fhir.rest.annotation.Read;
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
+import org.hl7.fhir.dstu3.model.IdType;
 
 /**
  * This is a simple resource provider which only implements "read/GET" methods, but
@@ -38,7 +40,7 @@ public class OrganizationResourceProvider implements IResourceProvider {
 	 * @return Returns a resource matching this identifier, or null if none exists.
 	 */
 	@Read()
-	public MyOrganization getResourceById(@IdParam IdDt theId) {
+	public MyOrganization getResourceById(@IdParam IdType theId) {
 		
 		/*
 		 * We only support one organization, so the follwing
@@ -60,7 +62,7 @@ public class OrganizationResourceProvider implements IResourceProvider {
 		
 		// The second extension is repeatable and takes a block type
 		MyOrganization.EmergencyContact contact = new MyOrganization.EmergencyContact();
-		contact.setActive(new BooleanDt(true));
+		contact.setActive(new BooleanType(true));
 		contact.setContact(new ContactPoint());
 		retVal.getEmergencyContact().add(contact);
 		

@@ -21,7 +21,7 @@ First, set the method to `POST`, and the URL to `http://fhirtest.uhn.ca/baseDstu
 
 <img src="./images/postman_url.png" style="border: 1px solid black;"/>
 
-Now, switch to the `Headers` tab, and add a header with a key/name of `Content-Type` and a value of `application/json+fhir` (or for XML, the value should be `application/xml+fhir` )
+Now, switch to the `Headers` tab, and add a header with a key/name of `Content-Type` and a value of `application/fhir+json` (or for XML, the value should be `application/fhir+xml` )
 
 <img src="./images/header_json.png"/>
 

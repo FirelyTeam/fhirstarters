@@ -33,7 +33,7 @@ Add the following content, which is a simple Patient resource. Look at the `"nam
   "identifier": [
     {
       "system": "urn:oid:1.2.36.146.595.217.0.1",
-      "value": "12345",
+      "value": "12345"
     }
   ],
   "name": [

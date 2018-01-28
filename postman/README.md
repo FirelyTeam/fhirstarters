@@ -17,7 +17,7 @@ The following example shows how to create a Patient resource by POSTing it to a 
 
 ## Create a JSON Resource
 
-First, set the method to `POST`, and the URL to `http://fhirtest.uhn.ca/baseDstu2/Patient` as shown in the screenshot below:
+First, set the method to `POST`, and the URL to `http://fhirtest.uhn.ca/baseDstu3/Patient` as shown in the screenshot below:
 
 <img src="./images/postman_url.png" style="border: 1px solid black;"/>
 
@@ -38,9 +38,7 @@ Add the following content, which is a simple Patient resource. Look at the `"nam
   ],
   "name": [
     {
-      "family": [
-        "Chalmers"
-      ],
+      "family": "Chalmers",
       "given": [
         "Peter",
         "James"

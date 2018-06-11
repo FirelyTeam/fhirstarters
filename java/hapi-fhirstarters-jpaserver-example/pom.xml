@@ -10,7 +10,7 @@
    <parent>
       <groupId>ca.uhn.hapi.fhir</groupId>
       <artifactId>hapi-fhir</artifactId>
-      <version>3.0.0</version>
+      <version>3.4.0</version>
    </parent>
 
    <artifactId>hapi-fhirstarters-jpaserver-example</artifactId>
@@ -34,37 +34,42 @@
       <dependency>
          <groupId>ca.uhn.hapi.fhir</groupId>
          <artifactId>hapi-fhir-base</artifactId>
-         <version>3.0.0</version>
+         <version>3.4.0</version>
       </dependency>
 
       <!-- At least one "structures" JAR must also be included -->
       <dependency>
          <groupId>ca.uhn.hapi.fhir</groupId>
          <artifactId>hapi-fhir-structures-dstu3</artifactId>
-         <version>3.0.0</version>
+         <version>3.4.0</version>
       </dependency>
 
       <!-- This dependency includes the JPA server itself, which is packaged separately from the rest of HAPI FHIR -->
       <dependency>
          <groupId>ca.uhn.hapi.fhir</groupId>
          <artifactId>hapi-fhir-jpaserver-base</artifactId>
-         <version>3.0.0</version>
+         <version>3.4.0</version>
       </dependency>
 
       <!-- This dependency is used for the "FHIR Tester" web app overlay -->
       <dependency>
          <groupId>ca.uhn.hapi.fhir</groupId>
          <artifactId>hapi-fhir-testpage-overlay</artifactId>
-         <version>3.0.0</version>
+         <version>3.4.0</version>
          <type>war</type>
          <scope>provided</scope>
       </dependency>
       <dependency>
          <groupId>ca.uhn.hapi.fhir</groupId>
          <artifactId>hapi-fhir-testpage-overlay</artifactId>
-         <version>3.0.0</version>
+         <version>3.4.0</version>
          <classifier>classes</classifier>
          <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>com.helger</groupId>
+         <artifactId>ph-schematron</artifactId>
       </dependency>
 
       <!-- HAPI-FHIR uses Logback for logging support. The logback library is included automatically by Maven as a part of the hapi-fhir-base dependency, but you also need to include a logging library. Logback
@@ -151,10 +156,6 @@
          <groupId>org.eclipse.jetty</groupId>
          <artifactId>jetty-webapp</artifactId>
          <scope>test</scope>
-      </dependency>
-      <dependency>
-         <groupId>com.phloc</groupId>
-         <artifactId>phloc-schematron</artifactId>
       </dependency>
 
    </dependencies>

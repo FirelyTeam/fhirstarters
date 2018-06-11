@@ -21,6 +21,8 @@ import ca.uhn.fhir.jpa.util.SubscriptionsRequireManualActivationInterceptorDstu3
 import ca.uhn.fhir.rest.server.interceptor.IServerInterceptor;
 import ca.uhn.fhir.rest.server.interceptor.LoggingInterceptor;
 import ca.uhn.fhir.rest.server.interceptor.ResponseHighlighterInterceptor;
+import ca.uhn.fhir.jpa.search.LuceneSearchMappingFactory;
+
 
 /**
  * This class isn't used by default by the example, but 
@@ -84,6 +86,7 @@ public class FhirServerConfigDstu3 extends BaseJavaConfigDstu3 {
 		extraProperties.put("hibernate.search.default.directory_provider", "filesystem");
 		extraProperties.put("hibernate.search.default.indexBase", "target/lucenefiles");
 		extraProperties.put("hibernate.search.lucene_version", "LUCENE_CURRENT");
+      extraProperties.put("hibernate.search.model_mapping", LuceneSearchMappingFactory.class.getName());
 //		extraProperties.put("hibernate.search.default.worker.execution", "async");
 		return extraProperties;
 	}

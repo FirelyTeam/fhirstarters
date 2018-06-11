@@ -10,7 +10,7 @@
 	<parent>
 		<groupId>ca.uhn.hapi.fhir</groupId>
 		<artifactId>hapi-fhir</artifactId>
-		<version>3.0.0</version>
+		<version>3.4.0</version>
 	</parent>
 
    <groupId>furore.github.io</groupId>
@@ -36,14 +36,14 @@
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-testpage-overlay</artifactId>
-			<version>3.0.0</version>
+			<version>3.4.0</version>
 			<type>war</type>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-testpage-overlay</artifactId>
-			<version>3.0.0</version>
+			<version>3.4.0</version>
 			<classifier>classes</classifier>
 			<scope>provided</scope>
 		</dependency>

@@ -10,10 +10,8 @@
    <modules>
       <module>hapi-fhirstarters-client-skeleton</module>
       <module>hapi-fhirstarters-rest-server-skeleton</module>
-      <module>hapi-fhirstarters-jpaserver-example</module>
       <module>hapi-fhirstarters-simple-server</module>
       <module>hapi-fhirstarters-model-and-parser-examples</module>
-      <module>hapi-fhirstarters-testpage-overlay</module>
       <module>tutorial-snippets</module>
    </modules>
 

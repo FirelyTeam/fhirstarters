@@ -1,34 +1,21 @@
 package ca.uhn.fhir.example;
 
-import ca.uhn.fhir.rest.client.api.IGenericClient;
-import org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender;
-import org.hl7.fhir.dstu3.model.Patient;
-
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.MethodOutcome;
+import ca.uhn.fhir.rest.client.api.IGenericClient;
+import org.hl7.fhir.r4.model.Enumerations;
+import org.hl7.fhir.r4.model.Patient;
 
 public class Example07_ClientReadAndUpdate {
 	public static void main(String[] theArgs) {
+	   // Create a client
+		FhirContext ctx = FhirContext.forR4();
+		IGenericClient client = ctx.newRestfulGenericClient("http://fhirtest.uhn.ca/R4");
 
-		// Create a client
-		String serverBaseUrl = "http://fhirtest.uhn.ca/baseDstu3";
-		FhirContext ctx = FhirContext.forDstu3();
-		IGenericClient client = ctx.newRestfulGenericClient(serverBaseUrl);
-
-		// Use the client to read back the new instance using the
-		// ID we retrieved from the read
-      Patient patient = client
-         .read()
-         .resource(Patient.class)
-         .withId("example")
-         .execute();
-
-      // Print the ID of the newly created resource
-		System.out.println("Found ID:    " + patient.getId());
-		
-		// Change the gender
-		patient.setGender(patient.getGender() == AdministrativeGender.MALE ?
-         AdministrativeGender.FEMALE : AdministrativeGender.MALE);
+		Patient patient = new Patient();
+		patient.setId("Patient/example"); // Give the patient an ID
+		patient.addName().setFamily("Simpson").addGiven("Homer");
+		patient.setGender(Enumerations.AdministrativeGender.MALE);
 
 		// Update the patient
 		MethodOutcome outcome = client

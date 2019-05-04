@@ -19,7 +19,7 @@
 	</repositories>
 
 	<properties>
-		<hapifhir_version>3.5.0</hapifhir_version>
+		<hapifhir_version>3.7.0</hapifhir_version>
 	</properties>
 
 	<dependencies>
@@ -30,12 +30,18 @@
 			<artifactId>hapi-fhir-base</artifactId>
 			<version>${hapifhir_version}</version>
 		</dependency>
-		<!-- At least one "structures" JAR must also be included -->
+
+      <!-- At least one "structures" JAR must also be included -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-structures-dstu3</artifactId>
 			<version>${hapifhir_version}</version>
 		</dependency>
+      <dependency>
+         <groupId>ca.uhn.hapi.fhir</groupId>
+         <artifactId>hapi-fhir-structures-r4</artifactId>
+         <version>${hapifhir_version}</version>
+      </dependency>
 
 		<!-- This dependency is used for the "FHIR Tester" web app overlay -->
 		<dependency>

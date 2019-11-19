@@ -3,13 +3,13 @@
 
 	<groupId>furore.github.io</groupId>
 	<artifactId>hapi-fhirstarters-model-and-parser-examples</artifactId>
-	<version>1.0</version>
+	<version>4.1.0</version>
 	<packaging>jar</packaging>
 
 	<name>HAPI FHIR Model and Parser Samples</name>
 
    <properties>
-      <hapifhir_version>3.8.0</hapifhir_version>
+      <hapifhir_version>4.1.0</hapifhir_version>
    </properties>
 
    <dependencies>

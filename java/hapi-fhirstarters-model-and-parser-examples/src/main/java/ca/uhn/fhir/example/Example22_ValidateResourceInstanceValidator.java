@@ -18,7 +18,7 @@ public class Example22_ValidateResourceInstanceValidator {
 
       // Cache this object! Supplies structure definitions
       DefaultProfileValidationSupport support = new DefaultProfileValidationSupport();
-		
+
       // Create the validator
       FhirInstanceValidator module = new FhirInstanceValidator(support);
       validator.registerValidatorModule(module);

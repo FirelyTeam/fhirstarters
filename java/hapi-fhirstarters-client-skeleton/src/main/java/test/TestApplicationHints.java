@@ -4,9 +4,9 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
-import org.hl7.fhir.dstu3.model.DateType;
-import org.hl7.fhir.dstu3.model.Enumerations;
-import org.hl7.fhir.dstu3.model.Patient;
+import org.hl7.fhir.r4.model.DateType;
+import org.hl7.fhir.r4.model.Enumerations;
+import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.instance.model.api.IIdType;
 
 public class TestApplicationHints {
@@ -44,18 +44,18 @@ public class TestApplicationHints {
 		FhirContext ctx = FhirContext.forDstu3();
 		IGenericClient client = ctx.newRestfulGenericClient("http://fhirtest.uhn.ca/baseDstu3");
 
-		org.hl7.fhir.dstu3.model.Bundle results = client
+		org.hl7.fhir.r4.model.Bundle results = client
 			.search()
 			.forResource(Patient.class)
 			.where(Patient.NAME.matches().value("test"))
-			.returnBundle(org.hl7.fhir.dstu3.model.Bundle.class)
+			.returnBundle(org.hl7.fhir.r4.model.Bundle.class)
 			.execute();
 
 		System.out.println("First page: ");
 		System.out.println(ctx.newXmlParser().encodeResourceToString(results));
 
 		// Load the next page
-		org.hl7.fhir.dstu3.model.Bundle nextPage = client
+		org.hl7.fhir.r4.model.Bundle nextPage = client
 			.loadPage()
 			.next(results)
 			.execute();

@@ -13,7 +13,7 @@ public class Example02_SimpleRestfulServer extends RestfulServer {
 	@Override
 	protected void initialize() throws ServletException {
 		// Create a context for the appropriate version
-		setFhirContext(FhirContext.forDstu3());
+		setFhirContext(FhirContext.forR4());
 		
 		// Register resource providers
 		registerProvider(new Example01_PatientResourceProvider());

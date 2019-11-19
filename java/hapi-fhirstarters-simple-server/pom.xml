@@ -27,14 +27,14 @@
 		<!-- At least one "structures" JAR must also be included -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-structures-dstu3</artifactId>
+			<artifactId>hapi-fhir-structures-r4</artifactId>
 			<version>4.1.0</version>
 		</dependency>
 
 		<!-- Used for validation  -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
-			<artifactId>hapi-fhir-validation-resources-dstu3</artifactId>
+			<artifactId>hapi-fhir-validation-resources-r4</artifactId>
 			<version>4.1.0</version>
 		</dependency>
 		<dependency>

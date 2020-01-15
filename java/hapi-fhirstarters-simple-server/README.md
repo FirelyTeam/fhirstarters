@@ -5,7 +5,7 @@ To try this project out:
 * Run the following command to compile the project and start a local testing server that runs it:
 
 ```
-man jetty:run
+mvn jetty:run
 ```
 
 * Point your browser to the following URL:

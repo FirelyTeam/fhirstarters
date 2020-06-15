@@ -4,7 +4,7 @@
 
    <groupId>furore.github.io</groupId>
    <artifactId>tutorial-snippets</artifactId>
-   <version>4.1.0</version>
+   <version>5.0.0</version>
    <packaging>jar</packaging>
 
    <name>HAPI FHIR Tutorial Snippets Project</name>
@@ -15,25 +15,25 @@
       <dependency>
          <groupId>ca.uhn.hapi.fhir</groupId>
          <artifactId>hapi-fhir-base</artifactId>
-         <version>4.1.0</version>
+         <version>5.0.0</version>
       </dependency>
 
       <!-- This dependency includes the HAPI FHIR Server Framework -->
       <dependency>
          <groupId>ca.uhn.hapi.fhir</groupId>
          <artifactId>hapi-fhir-server</artifactId>
-         <version>4.1.0</version>
+         <version>5.0.0</version>
       </dependency>
 
       <dependency>
          <groupId>ca.uhn.hapi.fhir</groupId>
          <artifactId>hapi-fhir-structures-dstu3</artifactId>
-         <version>4.1.0</version>
+         <version>5.0.0</version>
       </dependency>
       <dependency>
          <groupId>ca.uhn.hapi.fhir</groupId>
          <artifactId>hapi-fhir-validation-resources-dstu3</artifactId>
-         <version>4.1.0</version>
+         <version>5.0.0</version>
       </dependency>
       <dependency>
          <groupId>com.phloc</groupId>

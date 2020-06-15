@@ -3,7 +3,7 @@
 
 	<groupId>test</groupId>
 	<artifactId>hapi-fhirstarters-rest-server-skeleton</artifactId>
-	<version>4.1.0</version>
+	<version>5.0.0</version>
 	<packaging>war</packaging>
 
 	<name>HAPI FHIR Sample RESTful Server</name>
@@ -19,7 +19,7 @@
 	</repositories>
 
 	<properties>
-		<hapifhir_version>4.1.0</hapifhir_version>
+		<hapifhir_version>5.0.2</hapifhir_version>
 	</properties>
 
 	<dependencies>

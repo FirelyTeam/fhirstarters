@@ -3,39 +3,43 @@
 
 	<groupId>furore.github.io</groupId>
 	<artifactId>hapi-fhirstarters-simple-server</artifactId>
-	<version>4.1.0</version>
+	<version>5.0.0</version>
 	<packaging>war</packaging>
 
 	<name>HAPI FHIR Server Example</name>
 
-	<dependencies>
+   <properties>
+      <hapifhir_version>5.0.2</hapifhir_version>
+   </properties>
+
+   <dependencies>
 
 		<!-- This dependency includes the core HAPI-FHIR classes -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-base</artifactId>
-			<version>4.1.0</version>
+			<version>${hapifhir_version}</version>
 		</dependency>
 
       <!-- This dependency includes the HAPI FHIR Server Framework -->
       <dependency>
          <groupId>ca.uhn.hapi.fhir</groupId>
          <artifactId>hapi-fhir-server</artifactId>
-         <version>4.1.0</version>
+         <version>${hapifhir_version}</version>
       </dependency>
 
 		<!-- At least one "structures" JAR must also be included -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-structures-r4</artifactId>
-			<version>4.1.0</version>
+			<version>${hapifhir_version}</version>
 		</dependency>
 
 		<!-- Used for validation  -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-validation-resources-r4</artifactId>
-			<version>4.1.0</version>
+			<version>${hapifhir_version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.phloc</groupId>

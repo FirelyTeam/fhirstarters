@@ -43,22 +43,5 @@ public class Example01_PatientResourceProvider implements IResourceProvider {
       return retVal;
    }
 
-   /*
-    * TASKS:
-    *
-    * Start this project using the following command from the "hapi-fhirstarters-simple-server" directory:
-    *    mvn jetty:run
-    *
-    * Try invoking the read operation:
-    *    http://localhost:8080/Patient/1
-    *
-    * Examine the Server's CapabilityStatement:
-    *    http://localhost:8080/metadata
-    *
-    * Task: Add a @Create method
-    *    Hint: http://hapifhir.io/doc_rest_operations.html#Type_Level_-_Create
-    *    Bigger Hint: Look at Hints.java
-    */
-
 
 }

@@ -15,7 +15,7 @@ public class TestApplication {
       FhirContext ctx = FhirContext.forR4();
 
       // Create a client
-      IGenericClient client = ctx.newRestfulGenericClient("http://fhirtest.uhn.ca/baseR4");
+      IGenericClient client = ctx.newRestfulGenericClient("https://hapi.fhir.org/baseR4");
 
       // Read a patient with the given ID
       Patient patient = client.read().resource(Patient.class).withId("example").execute();
@@ -23,20 +23,6 @@ public class TestApplication {
       // Print the output
       String string = ctx.newJsonParser().setPrettyPrint(true).encodeResourceToString(patient);
       System.out.println(string);
-
-		/*
-       * Some more things to try:
-		 * 
-		 * Search for Patient resources with the name “Test” and print the results
-		 *   Bonus: Load the second page
-		 * 
-		 * Create a new Patient resource and upload it to the server
-		 *   Bonus: Log the ID that the server assigns to your resource
-		 *
- 		 * Read a resource from the server
-		 *   Bonus: Display an error if it has been deleted
-		 *   Hint for Bonus- See this page: http://hapifhir.io/apidocs/ca/uhn/fhir/rest/server/exceptions/package-summary.html
-		 */
 
    }
 

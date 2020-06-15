@@ -3,12 +3,16 @@
 
 	<groupId>furore.github.io</groupId>
 	<artifactId>hapi-fhirstarters-client-skeleton</artifactId>
-	<version>4.1.0</version>
+	<version>5.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>HAPI FHIR Skeleton Project (Client)</name>
 
-	<repositories>
+   <properties>
+      <hapifhir_version>5.0.2</hapifhir_version>
+   </properties>
+
+   <repositories>
 		<repository>
 			<id>oss-snapshots</id>
 			<snapshots>
@@ -24,21 +28,21 @@
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-base</artifactId>
-			<version>4.1.0</version>
+			<version>${hapifhir_version}</version>
 		</dependency>
       
       <!-- Include the client -->
      	<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-client</artifactId>
-			<version>4.1.0</version>
+			<version>${hapifhir_version}</version>
       </dependency>
 
 		<!-- At least one "structures" JAR must also be included -->
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-structures-r4</artifactId>
-			<version>4.1.0</version>
+			<version>${hapifhir_version}</version>
 		</dependency>
 
 		<!-- 

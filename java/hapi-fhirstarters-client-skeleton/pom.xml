@@ -9,7 +9,7 @@
 	<name>HAPI FHIR Skeleton Project (Client)</name>
 
    <properties>
-      <hapifhir_version>5.0.2</hapifhir_version>
+      <hapifhir_version>5.6.0</hapifhir_version>
    </properties>
 
    <repositories>
@@ -54,7 +54,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.1.7</version>
+			<version>1.2.3</version>
 		</dependency>
 
 	</dependencies>

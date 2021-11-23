@@ -9,7 +9,7 @@
 	<name>HAPI FHIR Server Example</name>
 
    <properties>
-      <hapifhir_version>5.0.2</hapifhir_version>
+      <hapifhir_version>5.6.0</hapifhir_version>
    </properties>
 
    <dependencies>
@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.1.7</version>
+			<version>1.2.3</version>
 		</dependency>
 
 		<!-- Needed for JEE/Servlet support -->
@@ -82,6 +82,11 @@
                <artifactId>jetty-maven-plugin</artifactId>
                <version>9.4.7.v20170914</version>
 				</plugin>
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-war-plugin</artifactId>
+               <version>3.3.1</version>
+            </plugin>
 			</plugins>
 		</pluginManagement>
 			

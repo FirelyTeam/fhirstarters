@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hl7.Fhir.Serialization" Version="3.8.0" />
-    <PackageReference Include="Hl7.Fhir.Specification.R4" Version="3.8.0" />
+    <PackageReference Include="Hl7.Fhir.Serialization" Version="3.8.2" />
+    <PackageReference Include="Hl7.Fhir.Specification.R4" Version="3.8.2" />
   </ItemGroup>
 
   <ItemGroup>

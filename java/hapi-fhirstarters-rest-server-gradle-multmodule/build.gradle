@@ -1,0 +1,169 @@
+buildscript {
+
+   ext {
+      spring_plugin_version = '2.5.12'
+      sonarqube_plugin_version = '3.0'
+      jacoco_tool_version = '0.8.6'
+
+      springBootVersion = '2.6.7'
+      // Note, there is a relationship between the spring-boot-version and the hapi-fhir-version as seen here (under 'Compile Dependencies'): https://mvnrepository.com/artifact/ca.uhn.hapi.fhir/hapi-fhir-spring-boot-autoconfigure/5.7.2
+      hapiFhirVersion = '5.7.2'
+
+      slf4jSimpleVersion = '1.7.30'
+      slf4jVersion = "1.7.30"
+      javaxInjectVersion = "1"
+
+      junitVersion = "4.13.2"
+      mockitoVersion = "3.11.2"
+
+      commonsLangVersion = '3.12.0'
+
+      versionBuildHolderVariable = '1.0-SNAPSHOT'
+
+      customJacocoExclude = ['**/*']
+
+   }
+
+//    dependencies {
+//        classpath("org.springframework.boot:spring-boot-gradle-plugin:$spring_plugin_version")
+//    }
+
+   dependencies {
+      classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '4.24.5')
+   }
+
+}
+
+plugins {
+   id 'java'
+   id "org.springframework.boot" version "$spring_plugin_version"
+   id "org.sonarqube" version "$sonarqube_plugin_version"
+   id 'jacoco'
+   id 'checkstyle'
+}
+
+
+jacoco {
+   toolVersion = "$jacoco_tool_version"
+}
+
+
+apply plugin: "org.sonarqube"
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+
+springBoot {
+   mainClassName = 'doesNotActuallyExistForRootProjectButNeedThisEntryToPreventBuildErrror'
+}
+
+
+// see https://guides.gradle.org/performance/#suggestions_for_java_projects
+tasks.withType(Test) {
+   maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+}
+
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+
+subprojects {
+
+   apply plugin: "jacoco"
+
+   repositories {
+
+      // ORDER MATTERS HERE.  See : https://stackoverflow.com/questions/50726435/difference-among-mavencentral-jcenter-and-mavenlocal/50726436#50726436
+
+      //  As a general advice, you should avoid adding mavenLocal() as a repository.
+      //  https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:case-for-maven-local
+      //
+      //  However, it may be necessary when testing here with changes to a shared component library that have only
+      //  been published locally (vi "gradle publishToMavenLocal".
+      //
+      jcenter()
+
+   }
+
+   test {
+      finalizedBy jacocoTestReport // report is always generated after tests run
+   }
+
+
+   jacocoTestReport {
+      dependsOn test // tests are required to run before generating the report
+
+      group = "build"
+      reports {
+         xml.enabled true
+         csv.enabled false
+         html.enabled false
+      }
+
+      afterEvaluate {
+         getClassDirectories().setFrom(classDirectories.files.collect {
+            fileTree(dir: it, exclude: "$customJacocoExclude")
+         })
+      }
+
+
+   }
+
+
+   sourceCompatibility = 11
+   targetCompatibility = 11
+}
+
+// repositories that apply to ONLY the root project.
+repositories {
+   //  As a general advice, you should avoid adding mavenLocal() as a repository.   https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:case-for-maven-local
+   //mavenLocal()
+   jcenter()
+   //jcenter is a superset of mavenCentral() so we do not specify mavenCentral here
+}
+
+sonarqube {
+   properties {
+      property "sonar.verbose", "true"
+      property 'sonar.coverage.exclusions', ""
+      property 'sonar.exclusions', "**/*"
+
+      // sonar.exclusions : Comma-delimited list of file path patterns to be excluded from analysis.
+      // sonar.coverage.exclusions : Comma-delimited list of file path patterns to be excluded from coverage calculations
+      // the pattern **/com/company/* work because java forces the folder structure to match the package-name.  the values are FOLDER name based...
+      // see : https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-gradle/
+
+   }
+}
+
+allprojects {
+
+
+   group 'a.uhn.example.gradleandspringbootexample'
+   version = "${versionBuildHolderVariable}"
+
+
+   configurations {
+
+      all {
+         //in order to get logback (or any other concrete logger) you have to exclude some libraries
+         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-log4j2'
+      }
+   }
+
+
+   plugins.withType(JavaPlugin) {
+      dependencies {
+         testImplementation group: 'junit', name: 'junit', version: junitVersion
+         testImplementation group: 'org.mockito', name: 'mockito-core', version: mockitoVersion
+      }
+   }
+
+   /* custom task to show dependencies.  run "gradle printAllDependencies" from commandline.  see https://stackoverflow.com/questions/44266687/how-to-print-out-all-dependencies-in-a-gradle-multi-project-build/54436979#54436979 */
+   task printAllDependencies(type: DependencyReportTask) {}
+}
+
+
+

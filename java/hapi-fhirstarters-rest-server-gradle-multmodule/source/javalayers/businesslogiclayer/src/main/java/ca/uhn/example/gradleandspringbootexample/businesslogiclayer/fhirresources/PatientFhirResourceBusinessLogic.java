@@ -120,12 +120,12 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
          );
       }
 
-      /* check for optional birthday and add to queryableStream : WITH CONSIDERATION TO MODIFIERS */
+      /* check for optional birthdate and add to queryableStream : WITH CONSIDERATION TO (most) PREFIXES */
       if (theBirthDate != null && null != theBirthDate.getValue()) {
 
-         /* OFTEN OVERLOOKED is that the fhir-filter-parameters have MODIFIERS on them.  Please see : https://build.fhir.org/search.html#prefix */
+         /* OFTEN OVERLOOKED is that the fhir-filter-parameters (that are number, date, and quantity) have PREFIXES that should be considered.  Please see : https://build.fhir.org/search.html#prefix */
 
-         /* if no modifier prefix is given, assume equal */
+         /* if no prefix is given, assume equal */
          if (null == theBirthDate.getPrefix() || theBirthDate.getPrefix() == ParamPrefixEnum.EQUAL) {
             queryableStream = queryableStream.filter(pat -> null != pat.getBirthDate() && DateUtils.isSameDay(pat.getBirthDate(), theBirthDate.getValue()));
          }

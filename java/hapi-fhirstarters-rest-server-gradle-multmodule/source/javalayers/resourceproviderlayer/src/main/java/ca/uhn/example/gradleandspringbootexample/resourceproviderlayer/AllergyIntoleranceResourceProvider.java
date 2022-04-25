@@ -1,6 +1,6 @@
 package ca.uhn.example.gradleandspringbootexample.resourceproviderlayer;
 
-import ca.uhn.example.gradleandspringbootexample.businesslogiclayer.fhirresources.interfaces.IEncounterFhirResourceBusinessLogic;
+import ca.uhn.example.gradleandspringbootexample.businesslogiclayer.fhirresources.interfaces.IAllergyIntoleranceFhirResourceBusinessLogic;
 import ca.uhn.fhir.model.primitive.StringDt;
 import ca.uhn.fhir.rest.annotation.Create;
 import ca.uhn.fhir.rest.annotation.IdParam;
@@ -12,7 +12,7 @@ import ca.uhn.fhir.rest.annotation.Update;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
-import org.hl7.fhir.r4.model.Encounter;
+import org.hl7.fhir.r4.model.AllergyIntolerance;
 import org.hl7.fhir.r4.model.IdType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,21 +21,21 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * This is a resource provider which stores Encounter resources in memory using a HashMap. This is obviously not a production-ready solution for many reasons,
+ * This is a resource provider which stores AllergyIntolerance resources in memory using a HashMap. This is obviously not a production-ready solution for many reasons,
  * but it is useful to help illustrate how to build a fully-functional server.
  */
-public final class EncounterResourceProvider implements IResourceProvider {
+public final class AllergyIntoleranceResourceProvider implements IResourceProvider {
 
-   private static final Logger LOGGER = LoggerFactory.getLogger(EncounterResourceProvider.class);
+   private static final Logger LOGGER = LoggerFactory.getLogger(AllergyIntoleranceResourceProvider.class);
 
-   private IEncounterFhirResourceBusinessLogic encounterFhirResourceBusinessLogic;
+   private IAllergyIntoleranceFhirResourceBusinessLogic allergyIntoleranceFhirResourceBusinessLogic;
 
-   public EncounterResourceProvider(IEncounterFhirResourceBusinessLogic encounterFhirResourceBusinessLogic) {
+   public AllergyIntoleranceResourceProvider(IAllergyIntoleranceFhirResourceBusinessLogic allergyIntoleranceFhirResourceBusinessLogic) {
 
-      if (null == encounterFhirResourceBusinessLogic) {
-         throw new IllegalArgumentException("IEncounterFhirResourceBusinessLogic is null");
+      if (null == allergyIntoleranceFhirResourceBusinessLogic) {
+         throw new IllegalArgumentException("IAllergyIntoleranceFhirResourceBusinessLogic is null");
       }
-      this.encounterFhirResourceBusinessLogic = encounterFhirResourceBusinessLogic;
+      this.allergyIntoleranceFhirResourceBusinessLogic = allergyIntoleranceFhirResourceBusinessLogic;
 
    }
 
@@ -43,8 +43,8 @@ public final class EncounterResourceProvider implements IResourceProvider {
     * The getResourceType method comes from IResourceProvider, and must be overridden to indicate what type of resource this provider supplies.
     */
    @Override
-   public Class<Encounter> getResourceType() {
-      return Encounter.class;
+   public Class<AllergyIntolerance> getResourceType() {
+      return AllergyIntolerance.class;
    }
 
 
@@ -53,9 +53,9 @@ public final class EncounterResourceProvider implements IResourceProvider {
     * new instance of a resource to the server.
     */
    @Create()
-   public MethodOutcome createEncounter(@ResourceParam Encounter theEncounter) {
+   public MethodOutcome createAllergyIntolerance(@ResourceParam AllergyIntolerance theAllergyIntolerance) {
 
-      IdType createdIdType = this.encounterFhirResourceBusinessLogic.createEncounter(theEncounter);
+      IdType createdIdType = this.allergyIntoleranceFhirResourceBusinessLogic.createAllergyIntolerance(theAllergyIntolerance);
       // Let the caller know the ID of the newly created resource
       return new MethodOutcome(createdIdType);
    }
@@ -66,11 +66,11 @@ public final class EncounterResourceProvider implements IResourceProvider {
     *
     * @param theLocationName This operation takes one parameter which is the search criteria. It is annotated with the "@Required" annotation. This annotation takes one argument, a string containing the name of
     *                        the search criteria. The datatype here is StringDt, but there are other possible parameter types depending on the specific search criteria.
-    * @return This method returns a list of Encounters. This list may contain multiple matching resources, or it may also be empty.
+    * @return This method returns a list of AllergyIntolerances. This list may contain multiple matching resources, or it may also be empty.
     */
    @Search()
-   public List<Encounter> findEncountersByName(@RequiredParam(name = Encounter.SP_LOCATION) StringDt theLocationName) {
-      List<Encounter> retVal = this.encounterFhirResourceBusinessLogic.findEncountersByName(theLocationName);
+   public List<AllergyIntolerance> findAllergyIntoleranceByFilters(@RequiredParam(name = AllergyIntolerance.SP_CRITICALITY) StringDt theLocationName) {
+      List<AllergyIntolerance> retVal = this.allergyIntoleranceFhirResourceBusinessLogic.findAllergyIntoleranceByFilters(theLocationName);
       return retVal;
    }
 
@@ -85,16 +85,16 @@ public final class EncounterResourceProvider implements IResourceProvider {
     * @return Returns a resource matching this identifier, or null if none exists.
     */
    @Read(version = true)
-   public Encounter readEncounter(@IdParam IdType theId) {
-      Optional<Encounter> foundEncounter = this.encounterFhirResourceBusinessLogic.readEncounter(theId);
+   public AllergyIntolerance readAllergyIntolerance(@IdParam IdType theId) {
+      Optional<AllergyIntolerance> foundAllergyIntolerance = this.allergyIntoleranceFhirResourceBusinessLogic.readAllergyIntolerance(theId);
 
-      if (foundEncounter.isEmpty()) {
+      if (foundAllergyIntolerance.isEmpty()) {
          String errorMsg = null == theId ? "theId is null" : theId.toString();
          LOGGER.error(errorMsg);
          throw new ResourceNotFoundException(errorMsg);
       }
 
-      return foundEncounter.get();
+      return foundAllergyIntolerance.get();
 
    }
 
@@ -102,13 +102,13 @@ public final class EncounterResourceProvider implements IResourceProvider {
     * The "@Update" annotation indicates that this method supports replacing an existing
     * resource (by ID) with a new instance of that resource.
     *
-    * @param theId        This is the ID of the Encounter to update
-    * @param theEncounter This is the actual resource to save
+    * @param theId        This is the ID of the AllergyIntolerance to update
+    * @param theAllergyIntolerance This is the actual resource to save
     * @return This method returns a "MethodOutcome"
     */
    @Update()
-   public MethodOutcome updateEncounter(@IdParam IdType theId, @ResourceParam Encounter theEncounter) {
-      this.encounterFhirResourceBusinessLogic.updateEncounter(theId, theEncounter);
+   public MethodOutcome updateAllergyIntolerance(@IdParam IdType theId, @ResourceParam AllergyIntolerance theAllergyIntolerance) {
+      this.allergyIntoleranceFhirResourceBusinessLogic.updateAllergyIntolerance(theId, theAllergyIntolerance);
       return new MethodOutcome();
    }
 

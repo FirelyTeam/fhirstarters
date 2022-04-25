@@ -1,10 +1,10 @@
 package ca.uhn.example.gradleandspringbootexample.toplayers.springboottoplayers.quickexampleserver.compositionroot;
 
-import ca.uhn.example.gradleandspringbootexample.businesslogiclayer.fhirresources.EncounterFhirResourceBusinessLogic;
+import ca.uhn.example.gradleandspringbootexample.businesslogiclayer.fhirresources.AllergyIntoleranceFhirResourceBusinessLogic;
 import ca.uhn.example.gradleandspringbootexample.businesslogiclayer.fhirresources.OrganizationFhirResourceBusinessLogic;
-import ca.uhn.example.gradleandspringbootexample.businesslogiclayer.fhirresources.interfaces.IEncounterFhirResourceBusinessLogic;
+import ca.uhn.example.gradleandspringbootexample.businesslogiclayer.fhirresources.interfaces.IAllergyIntoleranceFhirResourceBusinessLogic;
 import ca.uhn.example.gradleandspringbootexample.businesslogiclayer.fhirresources.interfaces.IOrganizationFhirResourceBusinessLogic;
-import ca.uhn.example.gradleandspringbootexample.resourceproviderlayer.EncounterResourceProvider;
+import ca.uhn.example.gradleandspringbootexample.resourceproviderlayer.AllergyIntoleranceResourceProvider;
 import ca.uhn.example.gradleandspringbootexample.resourceproviderlayer.OrganizationResourceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,13 +34,13 @@ public class CompositionRoot {
    }
 
    @Bean
-   public EncounterResourceProvider addEncounterResourceProviderToIocContainer(IEncounterFhirResourceBusinessLogic encounterFhirResourceBusinessLogic) {
-      return new EncounterResourceProvider(encounterFhirResourceBusinessLogic);
+   public AllergyIntoleranceResourceProvider addAllergyIntoleranceResourceProviderToIocContainer(IAllergyIntoleranceFhirResourceBusinessLogic allergyIntoleranceFhirResourceBusinessLogic) {
+      return new AllergyIntoleranceResourceProvider(allergyIntoleranceFhirResourceBusinessLogic);
    }
 
    @Bean
-   public IEncounterFhirResourceBusinessLogic addIEncounterFhirResourceBusinessLogicToIocContainer() {
-      return new EncounterFhirResourceBusinessLogic();
+   public IAllergyIntoleranceFhirResourceBusinessLogic addIAllergyIntoleranceFhirResourceBusinessLogicToIocContainer() {
+      return new AllergyIntoleranceFhirResourceBusinessLogic();
    }
 
    @Bean

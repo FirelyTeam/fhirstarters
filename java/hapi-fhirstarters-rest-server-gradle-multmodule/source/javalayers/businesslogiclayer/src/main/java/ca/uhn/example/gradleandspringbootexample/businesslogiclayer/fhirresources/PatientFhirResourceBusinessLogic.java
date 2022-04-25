@@ -55,7 +55,7 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
 
    private static final int FAMILY_MODULUS = 3;
 
-   private static final Logger LOGGER = LoggerFactory.getLogger(EncounterFhirResourceBusinessLogic.class);
+   private static final Logger LOGGER = LoggerFactory.getLogger(PatientFhirResourceBusinessLogic.class);
 
    /**
     * This map has a resource ID as a key, and each key maps to a Deque list containing all versions of the resource with that ID.
@@ -82,14 +82,12 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
          Patient patient = new Patient();
          patient.setId(Long.toString(resourceId));
          Identifier id1 = patient.addIdentifier();
-         id1.setSystem("http://mycompany.com/us-memberid");
+         id1.setSystem("http://gyms.are.us.com/gyms.are.us.memberid");
+         id1.setValue("GYMS.R.US..." + Long.toString(resourceId));
 
          Identifier id2 = patient.addIdentifier();
-         id2.setSystem("http://mycompany.com/us-subscriberid");
-         id2.setValue("mymycompanySubscriberId_" + Long.toString(resourceId));
-
-         //patient.addName().addGiven("Test");
-         //patient.getName().get(0).addGiven("PatientOne");
+         id2.setSystem("http://libraries.are.cool.com/libraries.are.cool.memberid");
+         id2.setValue("LIB.R.COOL..." + Long.toString(resourceId));
 
          HumanName hn1 = new HumanName();
 
@@ -106,10 +104,6 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
          hn1.addGiven("MyMiddleTwoName" + Long.toString(resourceId));
 
          patient.addName(hn1);
-
-         //patient.addName().addGiven("MyFirstName" + Long.toString(resourceId)).setFamily("Smith" + Long.toString(resourceId));
-         //patient.addName().addGiven("MyMiddleOneName" + Long.toString(resourceId)).setFamily("Smith" + Long.toString(resourceId));
-         //patient.addName().addGiven("MyMiddleTwoName" + Long.toString(resourceId)).setFamily("Smith" + Long.toString(resourceId));
 
          if ((resourceId % GENDER_MODULUS) == 0) {
             patient.setGender(AdministrativeGender.FEMALE);

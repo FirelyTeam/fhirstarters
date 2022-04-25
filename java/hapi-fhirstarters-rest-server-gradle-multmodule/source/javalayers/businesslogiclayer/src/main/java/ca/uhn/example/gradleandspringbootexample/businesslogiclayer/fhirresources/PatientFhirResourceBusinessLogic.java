@@ -282,21 +282,31 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
 
       Optional<Patient> returnItem = Optional.empty();
 
-      Deque<Patient> retVal;
+      Deque<Patient> singleFhirResourceAllHistoryItems;
       try {
-         retVal = myIdToPatientVersions.get(theId.getIdPartAsLong());
+         singleFhirResourceAllHistoryItems = myIdToPatientVersions.get(theId.getIdPartAsLong());
 
          if (!theId.hasVersionIdPart()) {
-            returnItem = Optional.of(retVal.getLast());
+            Patient mostRecentVersionPatient = singleFhirResourceAllHistoryItems.getLast();
+            mostRecentVersionPatient.getMeta().setVersionId(Integer.toString(singleFhirResourceAllHistoryItems.size()));
+            returnItem = Optional.of(mostRecentVersionPatient);
          } else {
-            for (Patient nextVersion : retVal) {
-               String nextVersionId = nextVersion.getId();
-               if (theId.getVersionIdPart().equals(nextVersionId)) {
-                  returnItem = Optional.of(nextVersion);
+            int versionCounter = 0; /* looping over the items in the Deque are the version-history in this simple demo */
+            for (Patient currentFhirResourceInDeque : singleFhirResourceAllHistoryItems) {
+
+               String inputVersionValue = theId.getVersionIdPart();
+               ++versionCounter;
+
+               if (inputVersionValue.equals(Integer.toString(versionCounter))) {
+                  currentFhirResourceInDeque.getMeta().setVersionId(Integer.toString(versionCounter));
+                  returnItem = Optional.of(currentFhirResourceInDeque);
                }
             }
-            // No matching version
-            throw new ResourceNotFoundException("Unknown version: " + theId.getValue());
+
+            if (returnItem.isEmpty()) {
+               // No matching version
+               throw new ResourceNotFoundException("Unknown version: " + theId.getValue());
+            }
          }
 
       } catch (Exception e) {

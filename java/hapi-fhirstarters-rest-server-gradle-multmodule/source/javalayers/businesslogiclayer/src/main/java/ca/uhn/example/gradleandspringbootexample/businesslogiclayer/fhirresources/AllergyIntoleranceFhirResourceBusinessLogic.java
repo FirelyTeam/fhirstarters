@@ -156,27 +156,44 @@ public final class AllergyIntoleranceFhirResourceBusinessLogic implements IAller
 
       Optional<AllergyIntolerance> returnItem = Optional.empty();
 
-      Deque<AllergyIntolerance> retVal;
+      Deque<AllergyIntolerance> singleFhirResourceAllHistoryItems;
       try {
-         retVal = myIdToAllergyIntoleranceVersions.get(theId.getIdPartAsLong());
+         singleFhirResourceAllHistoryItems = myIdToAllergyIntoleranceVersions.get(theId.getIdPartAsLong());
 
          if (!theId.hasVersionIdPart()) {
-            returnItem = Optional.of(retVal.getLast());
+            AllergyIntolerance mostRecentVersionFhirObject = singleFhirResourceAllHistoryItems.getLast();
+            mostRecentVersionFhirObject.getMeta().setVersionId(Integer.toString(singleFhirResourceAllHistoryItems.size()));
+            returnItem = Optional.of(mostRecentVersionFhirObject);
          } else {
-            for (AllergyIntolerance nextVersion : retVal) {
-               String nextVersionId = nextVersion.getId();
-               if (theId.getVersionIdPart().equals(nextVersionId)) {
-                  returnItem = Optional.of(nextVersion);
+            int versionCounter = 0; /* looping over the items in the Deque are the version-history in this simple demo */
+            for (AllergyIntolerance currentFhirResourceInDeque : singleFhirResourceAllHistoryItems) {
+
+               String inputVersionValue = theId.getVersionIdPart();
+               ++versionCounter;
+
+               if (inputVersionValue.equals(Integer.toString(versionCounter))) {
+                  currentFhirResourceInDeque.getMeta().setVersionId(Integer.toString(versionCounter));
+                  returnItem = Optional.of(currentFhirResourceInDeque);
                }
             }
 
+            if (returnItem.isEmpty()) {
+               // No matching version
+               throw new ResourceNotFoundException("Unknown version: " + theId.getValue());
+            }
          }
 
-      } catch (Exception ex) {
-         throw new RuntimeException(ex);
+      } catch (Exception e) {
+         /*
+          * If we can't parse the ID as a long, it's not valid so this is an unknown resource
+          */
+
+         LOGGER.error("Prove injected logger works. " + e.getMessage(), e);
+         throw new ResourceNotFoundException(theId.toString());
       }
 
       return returnItem;
+
    }
 
    public void updateAllergyIntolerance(@IdParam IdType theId, AllergyIntolerance theAllergyIntolerance) {

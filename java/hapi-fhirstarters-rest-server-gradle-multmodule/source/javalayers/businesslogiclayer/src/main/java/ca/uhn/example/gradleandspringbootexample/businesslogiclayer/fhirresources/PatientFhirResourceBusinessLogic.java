@@ -25,8 +25,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class PatientFhirResourceBusinessLogic implements IPatientFhirResourceBusinessLogic {
 
@@ -54,6 +56,8 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
    private static final int GENDER_MODULUS = 2;
 
    private static final int FAMILY_MODULUS = 3;
+
+   private static final LocalDate PATIENT_BIRTH_DATE_STATIC_REFERENCE_JULY_28_2000 = LocalDate.of(2000, 7, 28);
 
    private static final Logger LOGGER = LoggerFactory.getLogger(PatientFhirResourceBusinessLogic.class);
 
@@ -129,9 +133,10 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
 
          }
 
-         patient.setBirthDate(java.util.Date
-            .from(LocalDateTime.from(LocalDateTime.now().minusMonths(resourceId)).atZone(ZoneId.systemDefault())
-               .toInstant()));
+         /* use "minusMonths" to give variety to the birthdates */
+         LocalDate localComputedBirthDate = PATIENT_BIRTH_DATE_STATIC_REFERENCE_JULY_28_2000.plusMonths(resourceId);
+         Date birthDate = Date.from(localComputedBirthDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+         patient.setBirthDate(birthDate);
 
          /* REFERENCE to a managing-organization.  You should NOT under-estimate the issue of "references" in FHIR */
          /* https://www.hl7.org/fhir/patient-definitions.html#Patient.managingOrganization*/
@@ -205,37 +210,69 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
          .map(dq -> dq.getLast())
          .collect(Collectors.toList());
 
-//      List<Deque<Patient>> patients = myIdToPatientVersions
-//         .values()
-//         .stream()
-//         .filter(pat ->
-//               theFamilyName == null ? 1 == 1 : pat.getLast().getName().stream().anyMatch(hn -> null != hn.getFamily() && hn.getFamily().equalsIgnoreCase(theFamilyName.getValue()))
-//            //   && theBirthDate == null ? 1==1 : null != pat.getLast().getBirthDate() && pat.getLast().getBirthDate() == theBirthDate.getValue()
-//         )
-//         .collect(Collectors.toList());
+      Stream<Patient> queryableStream = lastEntriesInDequeuePatients.stream();
 
-      List<Patient> matchPatients = lastEntriesInDequeuePatients.stream()
-         .filter(pat ->
-            theFamilyName != null ? null != pat.getName() && pat.getName().stream().anyMatch(hn -> null != hn.getFamily() && hn.getFamily().equalsIgnoreCase(theFamilyName.getValue())) : true
-         )
+      /* build up the queryableStream based on the optional parameters */
 
-         .filter(pat ->
-            theGivenName != null ? null != pat.getName() && pat.getName().stream().anyMatch(hn -> null != hn.getGiven() && hn.getGiven().stream().anyMatch(gv -> gv.getValue().equalsIgnoreCase(theGivenName.getValue()))) : true
-         )
+      /* check for optional family-name and add to queryableStream */
+      if (null != theFamilyName) {
+         queryableStream = queryableStream.filter(pat ->
+            null != pat.getName() && pat.getName().stream().anyMatch(hn -> null != hn.getFamily() && hn.getFamily().equalsIgnoreCase(theFamilyName.getValue()))
+         );
+      }
 
-         /* start birth date permutations */
-         /* precision is not even considered here.  "modifier" searches are not trivial. here we are saying "equals" is same DAY for this proof of concept.  */
-         /* only 6 of the 9 modifiers are coded here.  see : https://build.fhir.org/search.html#prefix */
-         .filter(pat -> theBirthDate != null && null != theBirthDate.getValue() && (theBirthDate.getPrefix() == ParamPrefixEnum.EQUAL || null == theBirthDate.getPrefix()) ? null != pat.getBirthDate() && DateUtils.isSameDay(pat.getBirthDate(), theBirthDate.getValue()) : true)
-         .filter(pat -> theBirthDate != null && null != theBirthDate.getValue() && theBirthDate.getPrefix() == ParamPrefixEnum.NOT_EQUAL ? null != pat.getBirthDate() && !DateUtils.isSameDay(pat.getBirthDate(), theBirthDate.getValue()) : true)
+      /* check for optional given-name and add to queryableStream */
+      if (null != theGivenName) {
+         queryableStream = queryableStream.filter(pat ->
+            null != pat.getName() && pat.getName().stream().anyMatch(hn -> null != hn.getGiven() && hn.getGiven().stream().anyMatch(gv -> gv.getValue().equalsIgnoreCase(theGivenName.getValue())))
+         );
+      }
 
-         .filter(pat -> theBirthDate != null && null != theBirthDate.getValue() && theBirthDate.getPrefix() == ParamPrefixEnum.GREATERTHAN ? null != pat.getBirthDate() && (pat.getBirthDate().after(theBirthDate.getValue()) && !DateUtils.isSameDay(pat.getBirthDate(), theBirthDate.getValue())) : true)
-         .filter(pat -> theBirthDate != null && null != theBirthDate.getValue() && theBirthDate.getPrefix() == ParamPrefixEnum.GREATERTHAN_OR_EQUALS ? null != pat.getBirthDate() && (pat.getBirthDate().after(theBirthDate.getValue()) || DateUtils.isSameDay(pat.getBirthDate(), theBirthDate.getValue())) : true)
+      /* check for optional birthday and add to queryableStream : WITH CONSIDERATION TO MODIFIERS */
+      if (theBirthDate != null && null != theBirthDate.getValue()) {
 
-         .filter(pat -> theBirthDate != null && null != theBirthDate.getValue() && theBirthDate.getPrefix() == ParamPrefixEnum.LESSTHAN ? null != pat.getBirthDate() && (pat.getBirthDate().before(theBirthDate.getValue()) && !DateUtils.isSameDay(pat.getBirthDate(), theBirthDate.getValue())) : true)
-         .filter(pat -> theBirthDate != null && null != theBirthDate.getValue() && theBirthDate.getPrefix() == ParamPrefixEnum.LESSTHAN_OR_EQUALS ? null != pat.getBirthDate() && (pat.getBirthDate().before(theBirthDate.getValue()) || DateUtils.isSameDay(pat.getBirthDate(), theBirthDate.getValue())) : true)
+         /* OFTEN OVERLOOKED is that the fhir-filter-parameters have MODIFIERS on them.  Please see : https://build.fhir.org/search.html#prefix */
 
-         .collect(Collectors.toList());
+         /* if no modifier prefix is given, assume equal */
+         if (null == theBirthDate.getPrefix() || theBirthDate.getPrefix() == ParamPrefixEnum.EQUAL) {
+            queryableStream = queryableStream.filter(pat -> null != pat.getBirthDate() && DateUtils.isSameDay(pat.getBirthDate(), theBirthDate.getValue()));
+         }
+
+         if (theBirthDate.getPrefix() == ParamPrefixEnum.NOT_EQUAL) {
+            queryableStream = queryableStream.filter(pat -> null != pat.getBirthDate() && !DateUtils.isSameDay(pat.getBirthDate(), theBirthDate.getValue()));
+         }
+
+         if (theBirthDate.getPrefix() == ParamPrefixEnum.GREATERTHAN_OR_EQUALS) {
+            queryableStream = queryableStream.filter(pat -> null != pat.getBirthDate() && (pat.getBirthDate().after(theBirthDate.getValue()) || DateUtils.isSameDay(pat.getBirthDate(), theBirthDate.getValue())));
+         }
+
+         if (theBirthDate.getPrefix() == ParamPrefixEnum.GREATERTHAN) {
+            queryableStream = queryableStream.filter(pat -> null != pat.getBirthDate() && (pat.getBirthDate().after(theBirthDate.getValue()) && !DateUtils.isSameDay(pat.getBirthDate(), theBirthDate.getValue())));
+         }
+
+         if (theBirthDate.getPrefix() == ParamPrefixEnum.LESSTHAN_OR_EQUALS) {
+            queryableStream = queryableStream.filter(pat -> null != pat.getBirthDate() && (pat.getBirthDate().before(theBirthDate.getValue()) || DateUtils.isSameDay(pat.getBirthDate(), theBirthDate.getValue())));
+         }
+
+         if (theBirthDate.getPrefix() == ParamPrefixEnum.LESSTHAN) {
+            queryableStream = queryableStream.filter(pat -> null != pat.getBirthDate() && (pat.getBirthDate().before(theBirthDate.getValue()) && !DateUtils.isSameDay(pat.getBirthDate(), theBirthDate.getValue())));
+         }
+
+         /* NOT YET CODED
+
+            sa	the value for the parameter in the resource starts after the provided value
+               the range of the search value does not overlap with the range of the target value, and the range above the search value contains the range of the target value
+
+            eb	the value for the parameter in the resource ends before the provided value
+               the range of the search value does not overlap with the range of the target value, and the range below the search value contains the range of the target value
+
+            ap	the value for the parameter in the resource is approximately the same to the provided value.
+                 Note that the recommended value for the approximation is 10% of the stated value (or for a date, 10% of the gap between now and the date), but systems may choose other values where appropriate
+
+          */
+      }
+
+      List<Patient> matchPatients = queryableStream.collect(Collectors.toList());
 
       return matchPatients;
    }

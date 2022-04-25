@@ -170,6 +170,39 @@
 			"response": []
 		},
 		{
+			"name": "Patient By BirthDate LessEqual",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8083/myr4fhirserver/Patient?birthdate=le2004-10-31&_count=30",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8083",
+					"path": [
+						"myr4fhirserver",
+						"Patient"
+					],
+					"query": [
+						{
+							"key": "birthdate",
+							"value": "le2004-10-31"
+						},
+						{
+							"key": "_count",
+							"value": "30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Patient By BirthDate GreaterEqual",
 			"request": {
 				"method": "GET",

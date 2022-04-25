@@ -177,8 +177,8 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
 
       Deque<Patient> existingVersions = myIdToPatientVersions.get(theId);
 
-      // We just use the current number of versions as the next version number
-      String newVersion = Integer.toString(existingVersions.size());
+      // new version is the count of existing deque .. plus one.
+      String newVersion = Integer.toString(existingVersions.size() + 1);
 
       // Create an ID with the new version and assign it back to the resource
       IdType newId = new IdType("Patient", Long.toString(theId), newVersion);

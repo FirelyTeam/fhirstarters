@@ -1,0 +1,307 @@
+{
+	"info": {
+		"_postman_id": "a887af16-675f-4943-b5ac-a8e8c07f73b4",
+		"name": "zzzzzHapi-fhirstarters-rest-server-gradle-multmodule",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health (Simple)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8083/actuator/health",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8083",
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Health (Simple) Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8083/actuator/mappings",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8083",
+					"path": [
+						"actuator",
+						"mappings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MetaData (CapabilityStatement)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8083/myr4fhirserver/metadata",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8083",
+					"path": [
+						"myr4fhirserver",
+						"metadata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patient Get All (Simple)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8083/myr4fhirserver/Patient?_count=13",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8083",
+					"path": [
+						"myr4fhirserver",
+						"Patient"
+					],
+					"query": [
+						{
+							"key": "_count",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patient By FamilyName (Simple)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8083/myr4fhirserver/Patient?family=Smith&_count=30",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8083",
+					"path": [
+						"myr4fhirserver",
+						"Patient"
+					],
+					"query": [
+						{
+							"key": "family",
+							"value": "Smith"
+						},
+						{
+							"key": "_count",
+							"value": "30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patient By GivenName",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8083/myr4fhirserver/Patient?given=Mary&_count=30",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8083",
+					"path": [
+						"myr4fhirserver",
+						"Patient"
+					],
+					"query": [
+						{
+							"key": "given",
+							"value": "Mary"
+						},
+						{
+							"key": "_count",
+							"value": "30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patient By BirthDate GreaterEqual",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8083/myr4fhirserver/Patient?birthdate=ge2022-03-22&_count=30",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8083",
+					"path": [
+						"myr4fhirserver",
+						"Patient"
+					],
+					"query": [
+						{
+							"key": "birthdate",
+							"value": "ge2022-03-22"
+						},
+						{
+							"key": "_count",
+							"value": "30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patient Read",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8083/myr4fhirserver/Patient/5",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8083",
+					"path": [
+						"myr4fhirserver",
+						"Patient",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AllergyIntolerance Get All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8083/myr4fhirserver/AllergyIntolerance?criticality=abc",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8083",
+					"path": [
+						"myr4fhirserver",
+						"AllergyIntolerance"
+					],
+					"query": [
+						{
+							"key": "criticality",
+							"value": "abc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Organization READ",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8083/myr4fhirserver/Organization/101",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8083",
+					"path": [
+						"myr4fhirserver",
+						"Organization",
+						"101"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Organization READ DoesNotExist",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8083/myr4fhirserver/Organization/doesnotexist1001",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8083",
+					"path": [
+						"myr4fhirserver",
+						"Organization",
+						"doesnotexist1001"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -31,7 +31,11 @@ Run without a Java IDE (aka, without IntelliJ, Eclipse, NetBeans, etc)
         
 Example Http-Requests.
 
-(All are GET unless otherwise noted)
+Examples are located at:
+
+      /examples/postman/zzzzzHapi-fhirstarters-rest-server-gradle-multmodule.postman_collection.json
+
+Here are SOME of the examples: (All are GET unless otherwise noted)
 
     http://127.0.0.1:8083/actuator/health
     

@@ -65,7 +65,7 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
    /**
     * This is used to generate new IDs.
     */
-   private long myNextId = 1;
+   private long myNextId = DEMO_PATIENT_FHIR_LOGICAL_ID_START;
 
    @Inject
    public PatientFhirResourceBusinessLogic() {

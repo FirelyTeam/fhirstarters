@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 public final class AllergyIntoleranceFhirResourceBusinessLogic implements IAllergyIntoleranceFhirResourceBusinessLogic {
 
-   private static final int ENCOUNTER_SEED_COUNT = 10;
+   private static final int ALLERGY_INTOLERANCE_SEED_COUNT = 10;
 
    private static final Logger LOGGER = LoggerFactory.getLogger(AllergyIntoleranceFhirResourceBusinessLogic.class);
 
@@ -52,7 +52,7 @@ public final class AllergyIntoleranceFhirResourceBusinessLogic implements IAller
    private void setupFakeResourceProvider() {
 
       /* add i number of seed data AllergyIntolerances */
-      for (int i = 0; i < ENCOUNTER_SEED_COUNT; i++) {
+      for (int i = 0; i < ALLERGY_INTOLERANCE_SEED_COUNT; i++) {
 
          long resourceId = myNextId++;
 

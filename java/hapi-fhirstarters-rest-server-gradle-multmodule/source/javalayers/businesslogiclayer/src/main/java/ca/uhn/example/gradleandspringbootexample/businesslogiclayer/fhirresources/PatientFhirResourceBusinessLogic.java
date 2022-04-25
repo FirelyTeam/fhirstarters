@@ -259,16 +259,17 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
          }
 
          /* NOT YET CODED
+            sa "starts after"
+              the value for the parameter in the resource starts after the provided value
+                the range of the search value does not overlap with the range of the target value, and the range above the search value contains the range of the target value
 
-            sa	the value for the parameter in the resource starts after the provided value
-               the range of the search value does not overlap with the range of the target value, and the range above the search value contains the range of the target value
+            eb "end before"
+              the value for the parameter in the resource ends before the provided value
+                the range of the search value does not overlap with the range of the target value, and the range below the search value contains the range of the target value
 
-            eb	the value for the parameter in the resource ends before the provided value
-               the range of the search value does not overlap with the range of the target value, and the range below the search value contains the range of the target value
-
-            ap	the value for the parameter in the resource is approximately the same to the provided value.
-                 Note that the recommended value for the approximation is 10% of the stated value (or for a date, 10% of the gap between now and the date), but systems may choose other values where appropriate
-
+            ap "approximately"
+              the value for the parameter in the resource is approximately the same to the provided value.
+                Note that the recommended value for the approximation is 10% of the stated value (or for a date, 10% of the gap between now and the date), but systems may choose other values where appropriate
           */
       }
 

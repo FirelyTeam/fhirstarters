@@ -44,3 +44,10 @@ Example Http-Requests.
     http://127.0.0.1:8083/myr4fhirserver/Patient?given=Mary&_count=30
     
     http://127.0.0.1:8083/myr4fhirserver/Patient?birthdate=ge2022-03-22&_count=30
+
+
+    http://127.0.0.1:8083/myr4fhirserver/AllergyIntolerance?criticality=abc
+    
+    http://127.0.0.1:8083/myr4fhirserver/Organization/101
+    
+    http://127.0.0.1:8083/myr4fhirserver/Organization/doesnotexist1001

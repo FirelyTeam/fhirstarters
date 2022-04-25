@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Deque;
 import java.util.HashMap;
@@ -76,119 +77,10 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
       this.setupFakeResourceProvider();
    }
 
-   private void setupFakeResourceProvider() {
-
-      /* add i number of seed data patients */
-      for (int i = DEMO_PATIENT_FHIR_LOGICAL_ID_START; i < PATIENT_SEED_COUNT + DEMO_PATIENT_FHIR_LOGICAL_ID_START; i++) {
-
-         long resourceId = myNextId++;
-
-         Patient patient = new Patient();
-         patient.setId(Long.toString(resourceId));
-         Identifier id1 = patient.addIdentifier();
-         id1.setSystem("http://gyms.are.us.com/gyms.are.us.memberid");
-         id1.setValue("GYMS.R.US..." + Long.toString(resourceId));
-
-         Identifier id2 = patient.addIdentifier();
-         id2.setSystem("http://libraries.are.cool.com/libraries.are.cool.memberid");
-         id2.setValue("LIB.R.COOL..." + Long.toString(resourceId));
-
-         HumanName hn1 = new HumanName();
-
-         if ((resourceId % FAMILY_MODULUS) == 0) {
-            hn1.setFamily("Patel");
-         } else if ((resourceId % FAMILY_MODULUS) == 1) {
-            hn1.setFamily("Jones");
-         } else {
-            hn1.setFamily("Smith");
-         }
-
-         hn1.addGiven("MyFirstName" + Long.toString(resourceId));
-         hn1.addGiven("MyMiddleOneName" + Long.toString(resourceId));
-         hn1.addGiven("MyMiddleTwoName" + Long.toString(resourceId));
-
-         patient.addName(hn1);
-
-         if ((resourceId % GENDER_MODULUS) == 0) {
-            patient.setGender(AdministrativeGender.FEMALE);
-
-            if ((resourceId % GIVEN_MODULUS) == GIVEN_MODULUS_MATCH_ZERO) {
-               hn1.addGiven("Fatima");
-            } else if ((resourceId % GIVEN_MODULUS) == GIVEN_MODULUS_MATCH_TWO) {
-               hn1.addGiven("Mary");
-            } else {
-               hn1.setFamily("Pat");
-            }
-
-         } else {
-            patient.setGender(AdministrativeGender.MALE);
-
-            if ((resourceId % GIVEN_MODULUS) == GIVEN_MODULUS_MATCH_ONE) {
-               hn1.addGiven("John");
-            } else if ((resourceId % GIVEN_MODULUS) == GIVEN_MODULUS_MATCH_THREE) {
-               hn1.addGiven("Sri");
-            } else {
-               hn1.setFamily("Pat");
-            }
-
-         }
-
-         /* use "plusMonths" to give variety to the birth-dates */
-         LocalDate localComputedBirthDate = PATIENT_BIRTH_DATE_STATIC_REFERENCE_JULY_28_2000.plusMonths(resourceId);
-         Date birthDate = Date.from(localComputedBirthDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-         patient.setBirthDate(birthDate);
-
-         /* REFERENCE to a managing-organization.  You should NOT under-estimate the issue of "references" in FHIR */
-         /* https://www.hl7.org/fhir/patient-definitions.html#Patient.managingOrganization*/
-         /* Organization that is the custodian of the patient record */
-         /* here we grab our single example organization */
-         patient.setManagingOrganization(new Reference(String.format("/Organization/%1$s", OrganizationFhirResourceBusinessLogic.DEMO_ORGANIZATION_ONE_FHIR_LOGICAL_ID)));
-
-         LinkedList<Patient> list = new LinkedList<Patient>();
-         list.add(patient);
-
-         myIdToPatientVersions.put(resourceId, list);
-
-      }
-   }
-
-   /**
-    * Stores a new version of the patient in memory so that it can be retrieved later.
-    *
-    * @param thePatient The patient resource to store
-    * @param theId      The ID of the patient to retrieve
-    */
-   private void addNewVersion(final Patient thePatient, final Long theId) {
-      InstantDt publishedDate;
-      if (!myIdToPatientVersions.containsKey(theId)) {
-         myIdToPatientVersions.put(theId, new LinkedList<Patient>());
-         publishedDate = InstantDt.withCurrentTime();
-      } else {
-         Patient currentPatitne = myIdToPatientVersions.get(theId).getLast();
-         Meta resourceMetadata = currentPatitne.getMeta();
-         publishedDate = InstantDt.withCurrentTime();  //(InstantDt) resourceMetadata.get(ResourceMetadataKeyEnum.PUBLISHED);
-      }
-
-      /*
-       * PUBLISHED time will always be set to the time that the first version was stored. UPDATED time is set to the time that the new version was stored.
-       */
-      //thePatient.getMeta().put(ResourceMetadataKeyEnum.PUBLISHED, publishedDate);
-      thePatient.getMeta().setLastUpdated(InstantDt.withCurrentTime().getValue());
-
-      Deque<Patient> existingVersions = myIdToPatientVersions.get(theId);
-
-      // new version is the count of existing deque .. plus one.
-      String newVersion = Integer.toString(existingVersions.size() + 1);
-
-      // Create an ID with the new version and assign it back to the resource
-      IdType newId = new IdType("Patient", Long.toString(theId), newVersion);
-      thePatient.setId(newId);
-
-      existingVersions.add(thePatient);
-   }
-
    public IdType createPatient(@ResourceParam Patient thePatient) {
       validateResource(thePatient);
+
+      validateDoesNotAlreadyExist(thePatient);
 
       // Here we are just generating IDs sequentially
       long id = myNextId++;
@@ -278,6 +170,32 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
       return matchPatients;
    }
 
+   public List<Patient> findAllHistoryForSingle(@IdParam IdType theId) {
+
+      List<Patient> returnItems = new ArrayList<>();
+
+      Deque<Patient> singleFhirResourceAllHistoryItems;
+      try {
+         if (myIdToPatientVersions.containsKey(theId.getIdPartAsLong())) {
+            singleFhirResourceAllHistoryItems = myIdToPatientVersions.get(theId.getIdPartAsLong());
+            int versionCounter = 0;
+            for (Patient currentFhirResourceInDeque : singleFhirResourceAllHistoryItems) {
+               ++versionCounter;
+               currentFhirResourceInDeque.getMeta().setVersionId(Integer.toString(versionCounter));
+               returnItems.add(currentFhirResourceInDeque);
+            }
+
+            returnItems = singleFhirResourceAllHistoryItems.stream().collect(Collectors.toList());
+         } else {
+            throw new IllegalArgumentException();
+         }
+      } catch (Exception e) {
+         throw new ResourceNotFoundException(theId.toString());
+      }
+
+      return returnItems;
+   }
+
    public Optional<Patient> readPatient(@IdParam IdType theId) {
 
       Optional<Patient> returnItem = Optional.empty();
@@ -343,6 +261,41 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
    }
 
    /**
+    * Stores a new version of the patient in memory so that it can be retrieved later.
+    *
+    * @param thePatient The patient resource to store
+    * @param theId      The ID of the patient to retrieve
+    */
+   private void addNewVersion(final Patient thePatient, final Long theId) {
+      InstantDt publishedDate;
+      if (!myIdToPatientVersions.containsKey(theId)) {
+         myIdToPatientVersions.put(theId, new LinkedList<Patient>());
+         publishedDate = InstantDt.withCurrentTime();
+      } else {
+         Patient currentPatitne = myIdToPatientVersions.get(theId).getLast();
+         Meta resourceMetadata = currentPatitne.getMeta();
+         publishedDate = InstantDt.withCurrentTime();  //(InstantDt) resourceMetadata.get(ResourceMetadataKeyEnum.PUBLISHED);
+      }
+
+      /*
+       * PUBLISHED time will always be set to the time that the first version was stored. UPDATED time is set to the time that the new version was stored.
+       */
+      //thePatient.getMeta().put(ResourceMetadataKeyEnum.PUBLISHED, publishedDate);
+      thePatient.getMeta().setLastUpdated(InstantDt.withCurrentTime().getValue());
+
+      Deque<Patient> existingVersions = myIdToPatientVersions.get(theId);
+
+      // new version is the count of existing deque .. plus one.
+      String newVersion = Integer.toString(existingVersions.size() + 1);
+
+      // Create an ID with the new version and assign it back to the resource
+      IdType newId = new IdType("Patient", Long.toString(theId), newVersion);
+      thePatient.setId(newId);
+
+      existingVersions.add(thePatient);
+   }
+
+   /**
     * This method just provides simple business validation for resources we are storing.
     *
     * @param thePatient The patient to validate
@@ -357,6 +310,91 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
          cc.setText("No family name provided, Patient resources must have at least one family name.");
          outcome.addIssue().setSeverity(OperationOutcome.IssueSeverity.FATAL).setDetails(cc);
          throw new UnprocessableEntityException("Something bad", outcome);
+      }
+   }
+
+   private void validateDoesNotAlreadyExist(final Patient thePatient) {
+      if (thePatient.hasId()) {
+         if (myIdToPatientVersions.containsKey(thePatient.getId())) {
+
+            throw new UnprocessableEntityException("Create new called on existing fhir-logical-id: " + thePatient.getId());
+         }
+      }
+   }
+
+   private void setupFakeResourceProvider() {
+
+      /* add i number of seed data patients */
+      for (int i = DEMO_PATIENT_FHIR_LOGICAL_ID_START; i < PATIENT_SEED_COUNT + DEMO_PATIENT_FHIR_LOGICAL_ID_START; i++) {
+
+         long resourceId = myNextId++;
+
+         Patient patient = new Patient();
+         patient.setId(Long.toString(resourceId));
+         Identifier id1 = patient.addIdentifier();
+         id1.setSystem("http://gyms.are.us.com/gyms.are.us.memberid");
+         id1.setValue("GYMS.R.US..." + Long.toString(resourceId));
+
+         Identifier id2 = patient.addIdentifier();
+         id2.setSystem("http://libraries.are.cool.com/libraries.are.cool.memberid");
+         id2.setValue("LIB.R.COOL..." + Long.toString(resourceId));
+
+         HumanName hn1 = new HumanName();
+
+         if ((resourceId % FAMILY_MODULUS) == 0) {
+            hn1.setFamily("Patel");
+         } else if ((resourceId % FAMILY_MODULUS) == 1) {
+            hn1.setFamily("Jones");
+         } else {
+            hn1.setFamily("Smith");
+         }
+
+         hn1.addGiven("MyFirstName" + Long.toString(resourceId));
+         hn1.addGiven("MyMiddleOneName" + Long.toString(resourceId));
+         hn1.addGiven("MyMiddleTwoName" + Long.toString(resourceId));
+
+         patient.addName(hn1);
+
+         if ((resourceId % GENDER_MODULUS) == 0) {
+            patient.setGender(AdministrativeGender.FEMALE);
+
+            if ((resourceId % GIVEN_MODULUS) == GIVEN_MODULUS_MATCH_ZERO) {
+               hn1.addGiven("Fatima");
+            } else if ((resourceId % GIVEN_MODULUS) == GIVEN_MODULUS_MATCH_TWO) {
+               hn1.addGiven("Mary");
+            } else {
+               hn1.setFamily("Pat");
+            }
+
+         } else {
+            patient.setGender(AdministrativeGender.MALE);
+
+            if ((resourceId % GIVEN_MODULUS) == GIVEN_MODULUS_MATCH_ONE) {
+               hn1.addGiven("John");
+            } else if ((resourceId % GIVEN_MODULUS) == GIVEN_MODULUS_MATCH_THREE) {
+               hn1.addGiven("Sri");
+            } else {
+               hn1.setFamily("Pat");
+            }
+
+         }
+
+         /* use "plusMonths" to give variety to the birth-dates */
+         LocalDate localComputedBirthDate = PATIENT_BIRTH_DATE_STATIC_REFERENCE_JULY_28_2000.plusMonths(resourceId);
+         Date birthDate = Date.from(localComputedBirthDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+         patient.setBirthDate(birthDate);
+
+         /* REFERENCE to a managing-organization.  You should NOT under-estimate the issue of "references" in FHIR */
+         /* https://www.hl7.org/fhir/patient-definitions.html#Patient.managingOrganization*/
+         /* Organization that is the custodian of the patient record */
+         /* here we grab our single example organization */
+         patient.setManagingOrganization(new Reference(String.format("/Organization/%1$s", OrganizationFhirResourceBusinessLogic.DEMO_ORGANIZATION_ONE_FHIR_LOGICAL_ID)));
+
+         LinkedList<Patient> list = new LinkedList<Patient>();
+         list.add(patient);
+
+         myIdToPatientVersions.put(resourceId, list);
+
       }
    }
 }

@@ -3,6 +3,7 @@ package ca.uhn.example.gradleandspringbootexample.resourceproviderlayer;
 import ca.uhn.example.gradleandspringbootexample.businesslogiclayer.fhirresources.interfaces.IPatientFhirResourceBusinessLogic;
 import ca.uhn.fhir.model.primitive.StringDt;
 import ca.uhn.fhir.rest.annotation.Create;
+import ca.uhn.fhir.rest.annotation.History;
 import ca.uhn.fhir.rest.annotation.IdParam;
 import ca.uhn.fhir.rest.annotation.OptionalParam;
 import ca.uhn.fhir.rest.annotation.Read;
@@ -67,7 +68,7 @@ public final class PatientResourceProvider implements IResourceProvider {
     * This example searches by family name.
     *
     * @param theFamilyName This operation takes one parameter which is the search criteria. It is annotated with the "@Required" annotation. This annotation takes one argument, a string containing the name of
-    *                        the search criteria. The datatype here is StringDt, but there are other possible parameter types depending on the specific search criteria.
+    *                      the search criteria. The datatype here is StringDt, but there are other possible parameter types depending on the specific search criteria.
     * @return This method returns a list of Patients. This list may contain multiple matching resources, or it may also be empty.
     */
    @Search()
@@ -104,11 +105,19 @@ public final class PatientResourceProvider implements IResourceProvider {
 
    }
 
+   @History()
+   public List<Patient> getPatientHistory(
+      @IdParam IdType theId
+   ) {
+      List<Patient> retVal = this.patientFhirResourceBusinessLogic.findAllHistoryForSingle(theId);
+      return retVal;
+   }
+
    /**
     * The "@Update" annotation indicates that this method supports replacing an existing
     * resource (by ID) with a new instance of that resource.
     *
-    * @param theId        This is the ID of the Patient to update
+    * @param theId      This is the ID of the Patient to update
     * @param thePatient This is the actual resource to save
     * @return This method returns a "MethodOutcome"
     */

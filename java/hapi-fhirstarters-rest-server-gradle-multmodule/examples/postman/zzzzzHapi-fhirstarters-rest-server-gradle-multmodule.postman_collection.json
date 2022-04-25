@@ -286,6 +286,31 @@
 			"response": []
 		},
 		{
+			"name": "Patient Read History-Version ALL History",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8083/myr4fhirserver/Patient/5665/_history",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8083",
+					"path": [
+						"myr4fhirserver",
+						"Patient",
+						"5665",
+						"_history"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Patient Update aka PUT",
 			"request": {
 				"method": "PUT",
@@ -319,6 +344,44 @@
 						"myr4fhirserver",
 						"Patient",
 						"55"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patient Add aka POST",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/fhir+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"resourceType\": \"Patient\",\n    \"id\": \"This value is IGNORED by Hapi Fhir Framework on POST/ADD.  See Response-Header--Content-Location for the Actual Fhir Logical Id\",\n    \"identifier\": [\n        {\n            \"system\": \"http://gyms.are.us.com/gyms.are.us.memberid\",\n            \"value\": \"GYMS.R.US...BrandNew-111\"\n        },\n        {\n            \"system\": \"http://libraries.are.cool.com/libraries.are.cool.memberid\",\n            \"value\": \"LIB.R.COOL...BrandNew-111\"\n        }\n    ],\n    \"name\": [\n        {\n            \"family\": \"Jones\",\n            \"given\": [\n                \"MyFirstNameBrandNew-111\",\n                \"MyMiddleOneNameBrandNew-111\",\n                \"MyMiddleTwoNameBrandNew-111\",\n                \"Mary\"\n            ]\n        }\n    ],\n    \"gender\": \"female\",\n    \"birthDate\": \"2022-02-16\",\n    \"managingOrganization\": {\n        \"reference\": \"Organization/101\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8083/myr4fhirserver/Patient",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8083",
+					"path": [
+						"myr4fhirserver",
+						"Patient"
 					]
 				}
 			},

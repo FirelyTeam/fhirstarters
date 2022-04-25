@@ -11,14 +11,17 @@ import java.util.Optional;
 
 public interface IPatientFhirResourceBusinessLogic {
 
-   IdType createPatient(Patient thePatient);
-
    List<Patient> findBySearchParameters(
       StringDt theFamilyName,
       StringDt theGivenName,
       DateParam theBirthDate);
 
    Optional<Patient> readPatient(@IdParam IdType theId);
+
+   /* note the contract.  it is for a single patient (based o the fhir-logical-id), BUT the return is a collection of Patient resources because of the possibility of history-versions for the single Patient */
+   List<Patient> findAllHistoryForSingle(@IdParam IdType theId);
+
+   IdType createPatient(Patient thePatient);
 
    void updatePatient(@IdParam IdType theId, Patient thePatient);
 

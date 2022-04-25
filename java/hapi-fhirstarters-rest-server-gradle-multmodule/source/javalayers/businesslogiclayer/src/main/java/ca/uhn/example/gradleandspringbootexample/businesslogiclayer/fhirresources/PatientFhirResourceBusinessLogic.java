@@ -20,6 +20,7 @@ import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Meta;
 import org.hl7.fhir.r4.model.OperationOutcome;
 import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +37,10 @@ import java.util.stream.Collectors;
 
 public final class PatientFhirResourceBusinessLogic implements IPatientFhirResourceBusinessLogic {
 
+   public static final int DEMO_PATIENT_FHIR_LOGICAL_ID_START = 51;
+
+   public static final int PATIENT_SEED_COUNT = 10;
+
    private static final int GIVEN_MODULUS = 4;
 
    private static final int GIVEN_MODULUS_MATCH_ZERO = 0;
@@ -47,8 +52,6 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
    private static final int GIVEN_MODULUS_MATCH_THREE = 3;
 
    private static final int GENDER_MODULUS = 2;
-
-   private static final int PATIENT_SEED_COUNT = 10;
 
    private static final int FAMILY_MODULUS = 3;
 
@@ -72,7 +75,7 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
    private void setupFakeResourceProvider() {
 
       /* add i number of seed data patients */
-      for (int i = 0; i < PATIENT_SEED_COUNT; i++) {
+      for (int i = DEMO_PATIENT_FHIR_LOGICAL_ID_START; i < PATIENT_SEED_COUNT + DEMO_PATIENT_FHIR_LOGICAL_ID_START; i++) {
 
          long resourceId = myNextId++;
 
@@ -136,6 +139,12 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
             .from(LocalDateTime.from(LocalDateTime.now().minusMonths(resourceId)).atZone(ZoneId.systemDefault())
                .toInstant()));
 
+         /* REFERENCE to a managing-organization.  You should NOT under-estimate the issue of "references" in FHIR */
+         /* https://www.hl7.org/fhir/patient-definitions.html#Patient.managingOrganization*/
+         /* Organization that is the custodian of the patient record */
+         /* here we grab our single example organization */
+         patient.setManagingOrganization(new Reference(String.format("/Organization/%1$s", OrganizationFhirResourceBusinessLogic.DEMO_ORGANIZATION_ONE_FHIR_LOGICAL_ID)));
+
          LinkedList<Patient> list = new LinkedList<Patient>();
          list.add(patient);
 
@@ -195,8 +204,6 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
       StringDt theFamilyName,
       StringDt theGivenName,
       DateParam theBirthDate) {
-
-      List<Patient> retVal = new LinkedList<Patient>();
 
       List<Patient> lastEntriesInDequeuePatients = myIdToPatientVersions
          .values()

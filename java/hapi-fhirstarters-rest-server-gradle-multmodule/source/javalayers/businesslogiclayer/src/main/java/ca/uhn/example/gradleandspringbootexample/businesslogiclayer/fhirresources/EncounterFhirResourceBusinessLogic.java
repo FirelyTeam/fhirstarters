@@ -14,6 +14,7 @@ import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Meta;
 import org.hl7.fhir.r4.model.OperationOutcome;
 import org.hl7.fhir.r4.model.Period;
+import org.hl7.fhir.r4.model.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 public final class EncounterFhirResourceBusinessLogic implements IEncounterFhirResourceBusinessLogic {
 
@@ -130,6 +133,12 @@ public final class EncounterFhirResourceBusinessLogic implements IEncounterFhirR
       IdType newId = new IdType("Encounter", Long.toString(theId), newVersion);
       theEncounter.setId(newId);
 
+      /* REFERENCE to a subject-patient.  You should NOT under-estimate the issue of "references" in FHIR */
+      /* https://www.hl7.org/fhir/encounter-definitions.html#Encounter.subject */
+      /* below, we randomly get a patient, the real logic would be better of course */
+      int subjectPatientFhirLogicalId = new Random().nextInt((PatientFhirResourceBusinessLogic.DEMO_PATIENT_FHIR_LOGICAL_ID_START + PatientFhirResourceBusinessLogic.PATIENT_SEED_COUNT) - PatientFhirResourceBusinessLogic.DEMO_PATIENT_FHIR_LOGICAL_ID_START) + PatientFhirResourceBusinessLogic.DEMO_PATIENT_FHIR_LOGICAL_ID_START;
+      theEncounter.setSubject(new Reference(String.format("/Patient/%1$s", subjectPatientFhirLogicalId)));
+
       existingVersions.add(theEncounter);
    }
 
@@ -147,24 +156,14 @@ public final class EncounterFhirResourceBusinessLogic implements IEncounterFhirR
    }
 
    public List<Encounter> findEncountersByName(StringDt theLocationName) {
-      LinkedList<Encounter> retVal = new LinkedList<Encounter>();
 
-      /*
-       * Look for all Encounters matching the name
-       */
-//        for (Deque<Encounter> nextEncounterList : myIdToEncounterVersions.values()) {
-//            Encounter nextEncounter = nextEncounterList.getLast();
-//            NAMELOOP:
-//            for (HumanName nextName : nextEncounter.getName()) {
-//                String nextFamily = nextName.getFamily();
-//                if (theFamilyName.toString().equalsIgnoreCase((nextFamily))) {
-//                    retVal.add(nextEncounter);
-//                    break NAMELOOP;
-//                }
-//            }
-//        }
+      List<Encounter> lastEntriesInDequeueEncounters = myIdToEncounterVersions
+         .values()
+         .stream()
+         .map(dq -> dq.getLast())
+         .collect(Collectors.toList());
 
-      return retVal;
+      return lastEntriesInDequeueEncounters;
    }
 
    public List<Encounter> findEncountersUsingArbitraryCtriteria() {

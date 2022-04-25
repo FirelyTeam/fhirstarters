@@ -133,7 +133,7 @@ public final class PatientFhirResourceBusinessLogic implements IPatientFhirResou
 
          }
 
-         /* use "minusMonths" to give variety to the birthdates */
+         /* use "plusMonths" to give variety to the birth-dates */
          LocalDate localComputedBirthDate = PATIENT_BIRTH_DATE_STATIC_REFERENCE_JULY_28_2000.plusMonths(resourceId);
          Date birthDate = Date.from(localComputedBirthDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
          patient.setBirthDate(birthDate);

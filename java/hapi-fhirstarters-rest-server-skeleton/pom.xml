@@ -19,7 +19,7 @@
 	</repositories>
 
 	<properties>
-		<hapifhir_version>5.6.0</hapifhir_version>
+		<hapifhir_version>6.0.0</hapifhir_version>
 	</properties>
 
 	<dependencies>

@@ -1,13 +1,13 @@
 buildscript {
 
    ext {
-      spring_plugin_version = '2.5.12'
+      spring_plugin_version = '2.7.0'
       sonarqube_plugin_version = '3.0'
       jacoco_tool_version = '0.8.6'
 
-      springBootVersion = '2.6.7'
-      // Note, there is a relationship between the spring-boot-version and the hapi-fhir-version as seen here (under 'Compile Dependencies'): https://mvnrepository.com/artifact/ca.uhn.hapi.fhir/hapi-fhir-spring-boot-autoconfigure/5.7.2
-      hapiFhirVersion = '5.7.2'
+      springBootVersion = '2.7.0'
+      // Note, there is a relationship between the spring-boot-version and the hapi-fhir-version as seen here (under 'Compile Dependencies'): https://mvnrepository.com/artifact/ca.uhn.hapi.fhir/hapi-fhir-server/6.0.4
+      hapiFhirVersion = '6.0.4'
 
       slf4jSimpleVersion = '1.7.30'
       slf4jVersion = "1.7.30"
@@ -54,7 +54,7 @@ apply plugin: 'io.spring.dependency-management'
 
 
 springBoot {
-   mainClassName = 'doesNotActuallyExistForRootProjectButNeedThisEntryToPreventBuildErrror'
+   mainClass = 'doesNotActuallyExistForRootProjectButNeedThisEntryToPreventBuildErrror'
 }
 
 

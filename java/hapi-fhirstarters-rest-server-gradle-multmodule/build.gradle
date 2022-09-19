@@ -1,20 +1,20 @@
 buildscript {
 
    ext {
-      spring_plugin_version = '2.7.0'
+      spring_plugin_version = '2.7.3'
       sonarqube_plugin_version = '3.0'
       jacoco_tool_version = '0.8.6'
 
       springBootVersion = '2.7.0'
       // Note, there is a relationship between the spring-boot-version and the hapi-fhir-version as seen here (under 'Compile Dependencies'): https://mvnrepository.com/artifact/ca.uhn.hapi.fhir/hapi-fhir-server/6.0.4
-      hapiFhirVersion = '6.0.4'
+      hapiFhirVersion = '6.1.1'
 
-      slf4jSimpleVersion = '1.7.30'
-      slf4jVersion = "1.7.30"
+      slf4jSimpleVersion = '1.7.36'
+      slf4jVersion = "1.7.36"
       javaxInjectVersion = "1"
 
       junitVersion = "4.13.2"
-      mockitoVersion = "3.11.2"
+      mockitoVersion = "4.8.0"
 
       commonsLangVersion = '3.12.0'
 

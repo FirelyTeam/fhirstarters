@@ -19,9 +19,10 @@ public final class OrganizationFhirResourceBusinessLogic implements IOrganizatio
       /*
        * We only support one organization, so the following
        * exception causes an HTTP 404 response if the
-       * ID of "1" isn't used.
+       * ID of "101" isn't used.
        */
-      if (DEMO_ORGANIZATION_ONE_FHIR_LOGICAL_ID.equals(theId.getValue())) {
+      String justTheFhirLogicalId = theId.getIdPart();
+      if (DEMO_ORGANIZATION_ONE_FHIR_LOGICAL_ID.equals(justTheFhirLogicalId)) {
 
          Organization retVal = new Organization();
          retVal.setId(DEMO_ORGANIZATION_ONE_FHIR_LOGICAL_ID);

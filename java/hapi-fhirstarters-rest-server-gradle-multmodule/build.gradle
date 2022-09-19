@@ -5,8 +5,8 @@ buildscript {
       sonarqube_plugin_version = '3.0'
       jacoco_tool_version = '0.8.6'
 
-      springBootVersion = '2.7.0'
-      // Note, there is a relationship between the spring-boot-version and the hapi-fhir-version as seen here (under 'Compile Dependencies'): https://mvnrepository.com/artifact/ca.uhn.hapi.fhir/hapi-fhir-server/6.0.4
+      springBootVersion = '2.7.3'
+      // Note, there is a relationship between the spring-boot-version and the hapi-fhir-version as seen here (under 'Compile Dependencies'): https://mvnrepository.com/artifact/ca.uhn.hapi.fhir/hapi-fhir-server/6.1.1
       hapiFhirVersion = '6.1.1'
 
       slf4jSimpleVersion = '1.7.36'

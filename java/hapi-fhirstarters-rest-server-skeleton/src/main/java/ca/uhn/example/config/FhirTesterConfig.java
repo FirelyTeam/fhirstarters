@@ -27,13 +27,6 @@ public class FhirTesterConfig {
 	 * server, as well as one public server. If you are creating a project to 
 	 * deploy somewhere else, you might choose to only put your own server's 
 	 * address here.
-	 * 
-	 * Note the use of the ${serverBase} variable below. This will be replaced with
-	 * the base URL as reported by the server itself. Often for a simple Tomcat
-	 * (or other container) installation, this will end up being something
-	 * like "http://localhost:8080/hapi-fhir-jpaserver-example". If you are
-	 * deploying your server to a place with a fully qualified domain name, 
-	 * you might want to use that instead of using the variable.
 	 */
 	@Bean
 	public TesterConfig testerConfig() {
@@ -41,15 +34,10 @@ public class FhirTesterConfig {
 		retVal
 			.addServer()
 				.withId("home")
-				.withFhirVersion(FhirVersionEnum.DSTU2)
-				.withBaseUrl("${serverBase}/fhir")
-				.withName("Local Tester")
-			.addServer()
-				.withId("hapi")
-				.withFhirVersion(FhirVersionEnum.DSTU2)
-				.withBaseUrl("http://fhirtest.uhn.ca/baseDstu2")
-				.withName("Public HAPI Test Server");
-		
+				.withFhirVersion(FhirVersionEnum.DSTU3)
+				.withBaseUrl("http://localhost:8080/fhir/")
+				.withName("Local Tester");
+
 		/*
 		 * Use the method below to supply a client "factory" which can be used 
 		 * if your server requires authentication

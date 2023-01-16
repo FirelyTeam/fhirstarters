@@ -19,7 +19,7 @@
 	</repositories>
 
 	<properties>
-		<hapifhir_version>6.0.0</hapifhir_version>
+		<hapifhir_version>6.2.0</hapifhir_version>
 	</properties>
 
 	<dependencies>
@@ -31,7 +31,23 @@
 			<version>${hapifhir_version}</version>
 		</dependency>
 
+      <dependency>
+         <groupId>ca.uhn.hapi.fhir</groupId>
+         <artifactId>hapi-fhir-server</artifactId>
+         <version>${hapifhir_version}</version>
+      </dependency>
+
       <!-- At least one "structures" JAR must also be included -->
+      <dependency>
+         <groupId>ca.uhn.hapi.fhir</groupId>
+         <artifactId>hapi-fhir-structures-dstu2</artifactId>
+         <version>${hapifhir_version}</version>
+      </dependency>
+      <dependency>
+         <groupId>ca.uhn.hapi.fhir</groupId>
+         <artifactId>hapi-fhir-structures-hl7org-dstu2</artifactId>
+         <version>${hapifhir_version}</version>
+      </dependency>
 		<dependency>
 			<groupId>ca.uhn.hapi.fhir</groupId>
 			<artifactId>hapi-fhir-structures-dstu3</artifactId>
@@ -40,6 +56,16 @@
       <dependency>
          <groupId>ca.uhn.hapi.fhir</groupId>
          <artifactId>hapi-fhir-structures-r4</artifactId>
+         <version>${hapifhir_version}</version>
+      </dependency>
+      <dependency>
+         <groupId>ca.uhn.hapi.fhir</groupId>
+         <artifactId>hapi-fhir-structures-r4b</artifactId>
+         <version>${hapifhir_version}</version>
+      </dependency>
+      <dependency>
+         <groupId>ca.uhn.hapi.fhir</groupId>
+         <artifactId>hapi-fhir-structures-r5</artifactId>
          <version>${hapifhir_version}</version>
       </dependency>
 
@@ -56,7 +82,6 @@
 			<artifactId>hapi-fhir-testpage-overlay</artifactId>
 			<version>${hapifhir_version}</version>
 			<classifier>classes</classifier>
-			<scope>provided</scope>		
 		</dependency>
 
 		<!-- 
@@ -86,7 +111,7 @@
 		<dependency>
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf</artifactId>
-			<version>3.0.2.RELEASE</version>
+			<version>3.0.14.RELEASE</version>
 		</dependency>
 
 		<!-- Used for CORS support -->
@@ -101,7 +126,17 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
+      <dependency>
+         <groupId>org.fhir</groupId>
+         <artifactId>ucum</artifactId>
+         <version>1.0.3</version>
+      </dependency>
+      <dependency>
+         <groupId>com.github.ben-manes.caffeine</groupId>
+         <artifactId>caffeine</artifactId>
+         <version>3.1.1</version>
+      </dependency>
 
 	</dependencies>
 
@@ -123,7 +158,7 @@
 				<plugin>
 					<groupId>org.eclipse.jetty</groupId>
                <artifactId>jetty-maven-plugin</artifactId>
-               <version>9.4.7.v20170914</version>
+               <version>10.0.12</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

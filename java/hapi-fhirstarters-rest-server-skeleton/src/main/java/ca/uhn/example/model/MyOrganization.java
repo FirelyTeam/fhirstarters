@@ -4,7 +4,9 @@ import ca.uhn.fhir.model.api.BaseIdentifiableElement;
 import ca.uhn.fhir.model.api.IElement;
 import ca.uhn.fhir.model.api.IExtension;
 import ca.uhn.fhir.model.api.annotation.*;
+import ca.uhn.fhir.model.primitive.IdDt;
 import ca.uhn.fhir.util.ElementUtil;
+import org.hl7.fhir.dstu3.model.BackboneElement;
 import org.hl7.fhir.dstu3.model.BooleanType;
 import org.hl7.fhir.dstu3.model.CodeType;
 import org.hl7.fhir.dstu3.model.ContactPoint;
@@ -85,7 +87,7 @@ public class MyOrganization extends Organization {
     * It is referenced by the field myEmergencyContact above.
     */
    @Block
-   public static class EmergencyContact extends BaseIdentifiableElement implements IExtension {
+   public static class EmergencyContact extends BackboneElement {
 		/* *****************************
 		 * Fields
 		 * *****************************/
@@ -121,11 +123,6 @@ public class MyOrganization extends Organization {
          myActive = theActive;
       }
 
-      @Override
-      public <T extends IElement> List<T> getAllPopulatedChildElementsOfType(Class<T> theType) {
-         return ElementUtil.allPopulatedChildElements(theType, myActive, myContact);
-      }
-
       public ContactPoint getContact() {
          if (myContact == null) {
             myContact = new ContactPoint();
@@ -142,6 +139,14 @@ public class MyOrganization extends Organization {
 
       public void setContact(ContactPoint theContact) {
          myContact = theContact;
+      }
+
+      @Override
+      public BackboneElement copy() {
+         EmergencyContact emergencyContact = new EmergencyContact();
+         emergencyContact.setContact(myContact);
+         emergencyContact.setActive(myActive);
+         return emergencyContact;
       }
 
       @Override

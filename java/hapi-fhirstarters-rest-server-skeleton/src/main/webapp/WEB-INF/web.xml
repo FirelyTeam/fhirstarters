@@ -18,10 +18,6 @@
 		</init-param>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
-	<servlet-mapping>
-		<servlet-name>spring</servlet-name>
-		<url-pattern>/tester/*</url-pattern>
-	</servlet-mapping>
 
 	<!-- 
 	This is the actual FHIR server
@@ -36,10 +32,15 @@
 		<url-pattern>/fhir/*</url-pattern>
 	</servlet-mapping>
 
-	<!-- 
-	This filters provide support for Cross Origin Resource Sharing (CORS). You 
-	do not need this if you do not wish to support CORS in your own server. 
-	-->
+   <servlet-mapping>
+      <servlet-name>spring</servlet-name>
+      <url-pattern>/*</url-pattern>
+   </servlet-mapping>
+
+   <!--
+   This filters provide support for Cross Origin Resource Sharing (CORS). You
+   do not need this if you do not wish to support CORS in your own server.
+   -->
 	<filter>
 		<filter-name>CORS Filter</filter-name>
 		<filter-class>org.ebaysf.web.cors.CORSFilter</filter-class>

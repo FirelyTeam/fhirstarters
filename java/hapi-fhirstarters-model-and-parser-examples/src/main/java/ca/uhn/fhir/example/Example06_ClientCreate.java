@@ -18,7 +18,7 @@ public class Example06_ClientCreate {
       FhirContext ctx = FhirContext.forR5Cached();
 
       // Create a client
-      String serverBaseUrl = "http://hapi.fhir.org/baseR4";
+      String serverBaseUrl = "http://hapi.fhir.org/baseR5";
       IGenericClient client = ctx.newRestfulGenericClient(serverBaseUrl);
 
       // Use the client to store a new resource instance

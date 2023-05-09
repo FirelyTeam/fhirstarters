@@ -12,6 +12,19 @@
       <hapifhir_version>6.7.0-SNAPSHOT</hapifhir_version>
    </properties>
 
+   <repositories>
+      <repository>
+         <id>oss-snapshot</id>
+         <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+         <releases>
+            <enabled>false</enabled>
+         </releases>
+      </repository>
+   </repositories>
+
    <dependencies>
 
 		<!-- This dependency includes the core HAPI-FHIR classes -->

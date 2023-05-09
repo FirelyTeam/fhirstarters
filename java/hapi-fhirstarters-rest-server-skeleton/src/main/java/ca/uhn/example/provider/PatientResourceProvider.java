@@ -8,9 +8,9 @@ import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.exceptions.InvalidRequestException;
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
 import ca.uhn.fhir.rest.server.exceptions.UnprocessableEntityException;
-import org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender;
-import org.hl7.fhir.dstu3.model.*;
-import org.hl7.fhir.dstu3.model.OperationOutcome.IssueSeverity;
+import org.hl7.fhir.r5.model.Enumerations.AdministrativeGender;
+import org.hl7.fhir.r5.model.*;
+import org.hl7.fhir.r5.model.OperationOutcome.IssueSeverity;
 
 import java.util.*;
 
@@ -225,7 +225,7 @@ public class PatientResourceProvider implements IResourceProvider {
       if (thePatient.getNameFirstRep().getFamily().isEmpty()) {
          OperationOutcome outcome = new OperationOutcome();
          outcome.addIssue().setSeverity(IssueSeverity.FATAL).setDiagnostics("No family name provided, Patient resources must have at least one family name.");
-         throw new UnprocessableEntityException(FhirContext.forDstu3(), outcome);
+         throw new UnprocessableEntityException(FhirContext.forR5Cached(), outcome);
       }
    }
 

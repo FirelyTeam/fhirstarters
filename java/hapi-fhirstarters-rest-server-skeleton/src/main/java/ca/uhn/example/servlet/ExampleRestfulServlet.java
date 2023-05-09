@@ -23,7 +23,7 @@ public class ExampleRestfulServlet extends RestfulServer {
 	 * Constructor
 	 */
 	public ExampleRestfulServlet() {
-		super(FhirContext.forDstu3()); // This is an STU3 server
+		super(FhirContext.forR5Cached()); // This is an R5 server
 	}
 	
 	/**
@@ -36,7 +36,7 @@ public class ExampleRestfulServlet extends RestfulServer {
 		 * Two resource providers are defined. Each one handles a specific
 		 * type of resource.
 		 */
-		List<IResourceProvider> providers = new ArrayList<IResourceProvider>();
+		List<IResourceProvider> providers = new ArrayList<>();
 		providers.add(new PatientResourceProvider());
 		providers.add(new OrganizationResourceProvider());
 		setResourceProviders(providers);

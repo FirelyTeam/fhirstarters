@@ -1,8 +1,8 @@
 package ca.uhn.fhir.example;
 
-import org.hl7.fhir.dstu3.model.ContactPoint;
-import org.hl7.fhir.dstu3.model.Enumerations;
-import org.hl7.fhir.dstu3.model.Patient;
+import org.hl7.fhir.r5.model.ContactPoint;
+import org.hl7.fhir.r5.model.Enumerations;
+import org.hl7.fhir.r5.model.Patient;
 
 public class Example02_EnumeratedTypes {
    public static void main(String[] theArgs) {

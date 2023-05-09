@@ -10,7 +10,7 @@ public class Example07_ClientReadAndUpdate {
 	public static void main(String[] theArgs) {
 	   // Create a client
 		FhirContext ctx = FhirContext.forR4();
-		IGenericClient client = ctx.newRestfulGenericClient("http://fhirtest.uhn.ca/R4");
+		IGenericClient client = ctx.newRestfulGenericClient("https://hapi.fhir.org/baseR4");
 
 		Patient patient = new Patient();
 		patient.setId("Patient/example"); // Give the patient an ID

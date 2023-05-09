@@ -1,15 +1,15 @@
 package ca.uhn.fhir.example;
 
 import ca.uhn.fhir.rest.client.api.IGenericClient;
-import org.hl7.fhir.dstu3.model.Bundle;
-import org.hl7.fhir.dstu3.model.Patient;
+import org.hl7.fhir.r5.model.Bundle;
+import org.hl7.fhir.r5.model.Patient;
 
 import ca.uhn.fhir.context.FhirContext;
 
 public class Example08_ClientSearch {
    public static void main(String[] theArgs) {
-      FhirContext ctx = FhirContext.forDstu3();
-      IGenericClient client = ctx.newRestfulGenericClient("http://fhirtest.uhn.ca/baseDstu3");
+      FhirContext ctx = FhirContext.forR5Cached();
+      IGenericClient client = ctx.newRestfulGenericClient("https://hapi.fhir.org/baseR5");
 
       // Build a search and execute it
       Bundle response = client.search()

@@ -3,8 +3,8 @@ package ca.uhn.fhir.example;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
-import org.hl7.fhir.r4.model.Enumerations.AdministrativeGender;
-import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r5.model.Enumerations.AdministrativeGender;
+import org.hl7.fhir.r5.model.Patient;
 
 public class Example06_ClientCreate {
    public static void main(String[] theArgs) {
@@ -15,7 +15,7 @@ public class Example06_ClientCreate {
       pat.setGender(AdministrativeGender.MALE);
 
       // Create a context
-      FhirContext ctx = FhirContext.forR4();
+      FhirContext ctx = FhirContext.forR5Cached();
 
       // Create a client
       String serverBaseUrl = "http://hapi.fhir.org/baseR4";

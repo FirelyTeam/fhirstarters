@@ -5,14 +5,14 @@ import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.rest.client.interceptor.CookieInterceptor;
 import ca.uhn.fhir.rest.client.interceptor.LoggingInterceptor;
-import org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender;
-import org.hl7.fhir.dstu3.model.Patient;
+import org.hl7.fhir.r5.model.Enumerations.AdministrativeGender;
+import org.hl7.fhir.r5.model.Patient;
 
 public class Example09_Interceptors {
 	public static void main(String[] theArgs) {
 
 		// Create a client
-      IGenericClient client = FhirContext.forDstu3().newRestfulGenericClient("http://fhirtest.uhn.ca/baseDstu3");
+      IGenericClient client = FhirContext.forR5Cached().newRestfulGenericClient("https://hapi.fhir.org/baseR5");
 
       // Register some interceptors
       client.registerInterceptor(new CookieInterceptor("mycookie=Chips Ahoy"));

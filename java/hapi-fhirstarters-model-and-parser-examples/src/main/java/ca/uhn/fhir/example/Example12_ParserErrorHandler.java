@@ -9,7 +9,7 @@ public class Example12_ParserErrorHandler {
 	public static void main(String[] args) {
 		String input = "<Encounter xmlns=\"http://hl7.org/fhir\"><AAAA value=\"foo\"/></Encounter>";
 
-		IParser p = FhirContext.forDstu3().newXmlParser();
+		IParser p = FhirContext.forR5().newXmlParser();
 		
 		// Parse with (default) lenient error handler
 		p.setParserErrorHandler(new LenientErrorHandler());

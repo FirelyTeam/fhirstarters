@@ -1,7 +1,8 @@
 package ca.uhn.fhir.example;
 
-import org.hl7.fhir.dstu3.model.Encounter;
-import org.hl7.fhir.dstu3.model.OperationOutcome;
+import org.hl7.fhir.common.hapi.validation.validator.FhirInstanceValidator;
+import org.hl7.fhir.r5.model.Encounter;
+import org.hl7.fhir.r5.model.OperationOutcome;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
@@ -16,8 +17,11 @@ public class Example20_ValidateResource {
 		enc.addIdentifier().setSystem("http://acme.org/encNums").setValue("12345");
 		
 		// Create a new validator
-		FhirContext ctx = FhirContext.forDstu3();
+		FhirContext ctx = FhirContext.forR5Cached();
 		FhirValidator validator = ctx.newValidator();
+
+      // Register a validation module
+      validator.registerValidatorModule(new FhirInstanceValidator(ctx));
 		
 		// Did we succeed?
 		ValidationResult result = validator.validateWithResult(enc);
@@ -25,7 +29,7 @@ public class Example20_ValidateResource {
 		
 		// What was the result
 		OperationOutcome outcome = (OperationOutcome) result.toOperationOutcome();
-		IParser parser = ctx.newXmlParser().setPrettyPrint(true);
+		IParser parser = ctx.newJsonParser().setPrettyPrint(true);
 		System.out.println(parser.encodeResourceToString(outcome));
 	}
 }

@@ -2,8 +2,8 @@ package ca.uhn.fhir.example;
 
 import java.util.List;
 
-import org.hl7.fhir.dstu3.model.Identifier;
-import org.hl7.fhir.dstu3.model.Patient;
+import org.hl7.fhir.r5.model.Identifier;
+import org.hl7.fhir.r5.model.Patient;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
@@ -14,7 +14,7 @@ public class Example05_ParseResource {
 		String resourceBody = "{\"resourceType\":\"Patient\",\"identifier\":[{\"system\":\"http://acme.org/MRNs\",\"value\":\"7000135\"}],\"name\":[{\"family\":[\"Simpson\"],\"given\":[\"Homer\",\"J\"]}]}";
 
 		// Create a context
-		FhirContext ctx = FhirContext.forDstu3();
+		FhirContext ctx = FhirContext.forR5Cached();
 		
 		// Create a JSON parser
 		IParser parser = ctx.newJsonParser();

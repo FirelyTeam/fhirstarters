@@ -1,9 +1,9 @@
 package ca.uhn.fhir.example;
 
-import org.hl7.fhir.dstu3.model.ContactPoint.ContactPointSystem;
-import org.hl7.fhir.dstu3.model.ContactPoint.ContactPointUse;
-import org.hl7.fhir.dstu3.model.Enumerations.AdministrativeGender;
-import org.hl7.fhir.dstu3.model.Patient;
+import org.hl7.fhir.r5.model.ContactPoint.ContactPointSystem;
+import org.hl7.fhir.r5.model.ContactPoint.ContactPointUse;
+import org.hl7.fhir.r5.model.Enumerations.AdministrativeGender;
+import org.hl7.fhir.r5.model.Patient;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
@@ -19,7 +19,7 @@ public class Example04_EncodeResource {
 		pat.setGender(AdministrativeGender.MALE);
 
 		// Create a context
-		FhirContext ctx = FhirContext.forDstu3();
+		FhirContext ctx = FhirContext.forR5Cached();
 
 		// Create a JSON parser
 		IParser parser = ctx.newJsonParser();

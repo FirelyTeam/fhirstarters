@@ -1,6 +1,6 @@
 package ca.uhn.fhir.example;
 
-import org.hl7.fhir.dstu3.model.Patient;
+import org.hl7.fhir.r5.model.Patient;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.narrative.DefaultThymeleafNarrativeGenerator;
@@ -16,7 +16,7 @@ public class Example99_NarrativeGenerator {
 		pat.addIdentifier().setSystem("http://acme.org/mrns").setValue("12345");
 		
 		// Create a new context and enable the narrative generator
-		FhirContext ctx = FhirContext.forDstu2();
+		FhirContext ctx = FhirContext.forR5Cached();
 		ctx.setNarrativeGenerator(new DefaultThymeleafNarrativeGenerator());
 		
 		String res = ctx.newJsonParser().setPrettyPrint(true).encodeResourceToString(pat);

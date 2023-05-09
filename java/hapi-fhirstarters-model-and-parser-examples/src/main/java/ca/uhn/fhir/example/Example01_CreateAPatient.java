@@ -1,8 +1,8 @@
 package ca.uhn.fhir.example;
 
-import org.hl7.fhir.dstu3.model.HumanName;
-import org.hl7.fhir.dstu3.model.Identifier;
-import org.hl7.fhir.dstu3.model.Patient;
+import org.hl7.fhir.r5.model.HumanName;
+import org.hl7.fhir.r5.model.Identifier;
+import org.hl7.fhir.r5.model.Patient;
 
 public class Example01_CreateAPatient {
    public static void main(String[] theArgs) {

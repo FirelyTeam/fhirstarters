@@ -1,3 +1,0 @@
-[submodule "ios/FHIRPatients"]
-	path = ios/FHIRPatients
-	url = https://github.com/ryanbaldwin/FHIRPatients

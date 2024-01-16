@@ -1,0 +1,11 @@
+rootProject.name = 'hapi-fhirstarters-rest-server-skeleton-gradlelayersandspringbootexample'
+
+
+/*
+* please java developers, please stop writing single layer ("module" in gradle talk) applications.  please.
+* https://www.petrikainulainen.net/programming/gradle/getting-started-with-gradle-creating-a-multi-project-build/
+* https://docs.gradle.org/current/samples/sample_building_java_applications_multi_project.html
+*/
+include ':source:javalayers:businesslogiclayer'
+include ':source:javalayers:resourceproviderlayer'
+include ':source:javalayers:toplayers:springboottoplayers:quickexampleserver'

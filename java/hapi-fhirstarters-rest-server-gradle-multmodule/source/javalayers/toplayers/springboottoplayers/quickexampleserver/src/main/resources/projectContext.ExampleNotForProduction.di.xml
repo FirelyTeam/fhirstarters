@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+   <beans>
+      <bean id="xmlPatientInMemoryNotForProductionResourceProviderBean"
+            class="ca.uhn.example.gradleandspringbootexample.resourceproviderlayer.PatientResourceProvider">
+         <constructor-arg ref="xmlPatientFhirResourceBusinessLogicBean"/>
+      </bean>
+
+      <bean id="xmlPatientFhirResourceBusinessLogicBean"
+            class="ca.uhn.example.gradleandspringbootexample.businesslogiclayer.fhirresources.PatientFhirResourceBusinessLogic">
+      </bean>
+
+      <!--        <bean id="zzzEncounterInMemoryNotForProductionResourceProviderBean"-->
+      <!--              class="com.exampleimplementation.fhir.server.myfhirserverimplementation.providers.EncounterInMemoryNotForProductionResourceProvider">-->
+
+      <!--        </bean>-->
+
+
+      <bean id="zzzFhirContextBean"
+            class="ca.uhn.fhir.context.FhirContext" factory-method="forR4">
+      </bean>
+
+
+
+   </beans>
+
+
+</beans>

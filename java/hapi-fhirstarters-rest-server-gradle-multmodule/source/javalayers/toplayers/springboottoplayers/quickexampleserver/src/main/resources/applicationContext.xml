@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- the below will bring in the default of ExampleProjectNotForProduction OR the environment variable value of ProjectNameEnvironment -->
+    <import resource="projectContext.${ProjectNameEnvironment:ExampleNotForProduction}.di.xml"/>
+
+
+</beans>

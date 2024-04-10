@@ -1,0 +1,32 @@
+<Observation xmlns="http://hl7.org/fhir">
+	<status value="final"/>
+	<category>
+		<coding>
+			<system value="http://hl7.org/fhir/observation-category"/>
+			<code value="vital-signs"/>
+			<display value="Vital Signs"/>
+		</coding>
+		<text value="Vital Signs"/>
+	</category>
+	<code>
+		<coding>
+			<system value="http://loinc.org"/>
+			<code value="29463-7"/>
+			<display value="Body weight"/>
+		</coding>
+		<text value="Body weight"/>
+	</code>
+	<subject>
+		<reference value="Patient/xxx"/>
+	</subject>
+	<effectiveDateTime value="2016-06-14"/>
+	<performer>
+		<reference value="Patient/xxx"/>
+	</performer>
+	<valueQuantity>
+		<value value="85"/>
+		<unit value="Kg"/>
+		<system value="http://unitsofmeasure.org"/>
+		<code value="kg"/>
+	</valueQuantity>
+</Observation>

@@ -1,13 +1,11 @@
 package ca.uhn.example.interceptor;
 
 import ca.uhn.fhir.rest.api.server.RequestDetails;
-import ca.uhn.fhir.rest.server.exceptions.AuthenticationException;
 import ca.uhn.fhir.rest.server.interceptor.InterceptorAdapter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class LegacyLoggingInterceptor extends InterceptorAdapter {
    private static final Logger ourLog = LoggerFactory.getLogger(LegacyLoggingInterceptor.class);

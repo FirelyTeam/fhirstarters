@@ -1,0 +1,40 @@
+server:
+   port : 8083
+management:
+   endpoints:
+      web:
+         base-path: /actuator
+         exposure:
+            include: "*"
+hapi:
+   fhir:
+      version: r4
+      server:
+         path: /myr4fhirserver/*
+      rest:
+         server-name: quick-sample-fhir-server-not-for-production
+         server-version: 1.0.0
+         implementation-description: quick-sample-fhir-server-not-for-production implementation
+         default-response-encoding: json
+         e-tag-support: enabled
+         default-pretty-print: true
+      validation:
+         enabled: true
+         request-only: true
+      jpa:
+         scheduling-disabled: true
+         subscription-enabled: false
+      cors:
+         mapping-path: '/**'
+         allowed-origins: '*'
+         allowed-headers: '*'
+         allowed-methods: '*'
+logging:
+   level:
+      org:
+         springframework:
+            security: INFO
+            jdbc:
+               core:
+                  JdbcTemplate: INFO
+                  StatementCreatorUtils: INFO

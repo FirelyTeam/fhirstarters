@@ -1,0 +1,14 @@
+plugins {
+   id 'java'
+}
+
+dependencies {
+
+   implementation project(':source:javalayers:businesslogiclayer')
+
+   implementation group: 'javax.inject', name: 'javax.inject', version: javaxInjectVersion
+
+   implementation group: 'ca.uhn.hapi.fhir', name: 'hapi-fhir-base', version: hapiFhirVersion
+   implementation group: 'ca.uhn.hapi.fhir', name: 'hapi-fhir-structures-r4', version: hapiFhirVersion
+   implementation group: 'ca.uhn.hapi.fhir', name: 'hapi-fhir-server', version: hapiFhirVersion
+}

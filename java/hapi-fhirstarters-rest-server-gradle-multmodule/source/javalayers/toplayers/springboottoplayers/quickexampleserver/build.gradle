@@ -1,0 +1,40 @@
+plugins {
+   id 'java'
+}
+
+
+apply plugin: 'org.springframework.boot'
+//apply plugin: 'io.spring.dependency-management'
+apply plugin: 'application'
+mainClassName = 'ca.uhn.example.gradleandspringbootexample.toplayers.springboottoplayers.quickexampleserver.QuickExampleServerApplicationEntry'
+
+
+dependencies {
+
+   implementation project(':source:javalayers:resourceproviderlayer')
+   implementation project(':source:javalayers:businesslogiclayer')
+
+   /* spring boot dependencies */
+   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
+   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: springBootVersion
+   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: springBootVersion
+
+
+   /* hapi fhir dependencies */
+   implementation group: 'ca.uhn.hapi.fhir', name: 'hapi-fhir-base', version: hapiFhirVersion
+   implementation group: 'ca.uhn.hapi.fhir', name: 'hapi-fhir-structures-r4', version: hapiFhirVersion
+   implementation group: 'ca.uhn.hapi.fhir', name: 'hapi-fhir-server', version: hapiFhirVersion
+   /* below items allow hapi-fhir-server to be configured by application.yml entries */
+   implementation group: 'ca.uhn.hapi.fhir', name: 'hapi-fhir-spring-boot-autoconfigure', version: hapiFhirVersion
+   implementation group: 'ca.uhn.hapi.fhir', name: 'hapi-fhir-jaxrsserver-base', version: hapiFhirVersion
+
+
+   implementation group: 'org.apache.commons', name: 'commons-lang3', version: commonsLangVersion
+
+
+   /* Replace later with a "real" concrete Logger */
+   implementation group: 'org.slf4j', name: 'slf4j-simple', version: slf4jSimpleVersion
+
+
+}
+
